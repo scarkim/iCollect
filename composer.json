@@ -1,0 +1,18 @@
+{
+  "name": "skimgree/328/iCollect",
+  "authors":
+  [
+    {
+      "name": "Scarlett Kim",
+      "email": "scarlettkimm@gmail.com"
+    },
+    {
+      "name": "Robert Cox",
+      "email": "rcox18@mail.greenriver.edu"
+    }
+  ],
+  "require":
+  {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}

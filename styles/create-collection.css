@@ -4,3 +4,52 @@ body {
 form {
     display: inline-block;
 }
+button {
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+    border-color: transparent;
+    background: transparent;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+    font-size: 20px;
+    font-family: inherit;
+    padding: 5px 12px;
+    overflow: hidden;
+    border: 1px solid #B8B8B8;
+    border-radius: 4px;
+    background: transparent;
+    color: grey;
+    -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+    font-size: 20px;
+    font-family: inherit;
+    padding: 5px 12px;
+}
+button:hover,
+button:focus {
+    border-color: #303030;
+}
+:focus{outline: none;}
+/*START OF INPUT TEXT CODE*/
+
+/* necessary to give position: relative to parent. */
+input[type="text"]{font: 15px/24px 'Muli', sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;}
+
+.positioner{
+    width: 100%; margin: 40px 3%; position: relative;
+} /* necessary to give position: relative to parent. */
+input[type="text"]{
+    font: 15px/24px "Lato", Arial, sans-serif; color: #333; width: 100%; box-sizing: border-box; letter-spacing: 1px;
+}
+.effect-1
+{border: 0; padding: 7px 0; border-bottom: 1px solid #ccc;}
+
+.effect-1 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: 	#B8B8B8; transition: 0.4s;}
+.effect-1:focus ~ .focus-border{width: 100%; transition: 0.4s;}
+.effect-1 {border: 0; padding: 7px 0; border-bottom: 1px solid #ccc;}
+
+.effect-1 ~ .focus-border{position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: #B8B8B8; transition: 0.4s;}
+.effect-1:focus ~ .focus-border{width: 100%; transition: 0.4s;}
+/*END OF INPUT TEXT CODE*/

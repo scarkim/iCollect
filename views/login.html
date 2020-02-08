@@ -11,60 +11,31 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
     <link rel ="stylesheet" href="styles/signup.css">
-<!--    CHANGE FILE PATH TO STYLES AFTER TESTING  -->
-    <title>Sign Up</title>
+    <title>Login</title>
 </head>
 <body>
 <div class = "container">
     <form action="#" id="new-user-form" method="post">
-        <h1>Sign Up</h1>
+        <h1>Login</h1>
         <div class="positioner input-effect form-inline">
             <label for="username">Username</label>
             <input class="effect-1" type="text" placeholder="Username"
-                   name="username" id="username" value="{{ @username }}">
+                   name="username" id="username">
             <span class="focus-border"></span>
         </div>
+        <div class ="formgroup">
         <div class="positioner input-effect form-inline">
             <label for="password">Password</label>
             <input class="effect-1" type="password" placeholder="Password"
                    name = "password" id="password">
             <span class="focus-border"></span>
         </div>
-        <div class="positioner input-effect form-inline">
-            <label for="email">Email</label>
-            <input class="effect-1" type="text" placeholder="Email"
-                   name = "email" id="email" value="{{ @email }}">
-            <span class="focus-border"></span>
+            <a id = "forgotpw" href="#">Forgot password?</a>
         </div>
-        <div class="form-group">
-            <div class="form-inline">
-                <h4>Account Type: &nbsp;</h4>
-                <a href="http://www.google.com" target="_blank">
-                    <img src = "images/info-icon.png" width="15px">
-                </a>
-            </div>
-            <label for="general-account" class="radio-inline">
-                <input type="radio" name="accountType" id="general-account" checked>
-                General Account&nbsp;
-            </label>
-            <label for="premium-account" class="radio-inline">
-                <input type="radio" name="accountType" id="premium-account">
-                Premium Account
-            </label>
-        </div>
+
         <br>
-        <button type="submit">Create Account</button>
+        <button type="submit">Login</button>
     </form>
-    <check if="{{ @errors['username'] }}">
-        <h1>{{ @errors['username'] }}</h1>
-    </check>
-    <check if="{{ @errors['email'] }}">
-        <h1>{{ @errors['email'] }}</h1>
-    </check>
-    <check if="{{ @errors['connection'] }}">
-        <h1>{{ @errors['connection'] }}</h1>
-    </check>
-    <h1>{{ @result }}</h1>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

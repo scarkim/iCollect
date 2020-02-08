@@ -15,9 +15,26 @@ $f3 = Base::instance();
 
 //Turn on Fat-Free error reporting
 $f3->set('DEBUG', 3);
+
 $f3->route("GET /", function (){
     $view = new Template();
     echo $view->render("views/home.html");
+});
+
+$f3->route("GET|POST /signup", function (){
+
+/*username
+password
+email
+accountType*/
+
+    $view = new Template();
+    echo $view->render("views/signup.html");
+});
+
+$f3->route("GET /login", function (){
+    $view = new Template();
+    echo $view->render("views/create-collection.html");
 });
 //Run Fat-Free
 $f3->run();

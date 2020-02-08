@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 //Required file
 require_once('vendor/autoload.php');
-require ("connection.php");
+require ("../../../connection.php");
 require_once('model/validate.php');
 
 //Instantiate Fat-Free

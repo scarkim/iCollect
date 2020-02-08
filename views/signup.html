@@ -21,7 +21,7 @@
         <div class="positioner input-effect form-inline">
             <label for="username">Username</label>
             <input class="effect-1" type="text" placeholder="Username"
-                   name="username" id="username">
+                   name="username" id="username" value="{{ @username }}">
             <span class="focus-border"></span>
         </div>
         <div class="positioner input-effect form-inline">
@@ -33,7 +33,7 @@
         <div class="positioner input-effect form-inline">
             <label for="email">Email</label>
             <input class="effect-1" type="text" placeholder="Email"
-                   name = "email" id="email">
+                   name = "email" id="email" value="{{ @email }}">
             <span class="focus-border"></span>
         </div>
         <div class="form-group">
@@ -55,6 +55,16 @@
         <br>
         <button type="submit">Create Account</button>
     </form>
+    <check if="{{ @errors['username'] }}">
+        <h1>{{ @errors['username'] }}</h1>
+    </check>
+    <check if="{{ @errors['email'] }}">
+        <h1>{{ @errors['email'] }}</h1>
+    </check>
+    <check if="{{ @errors['connection'] }}">
+        <h1>{{ @errors['connection'] }}</h1>
+    </check>
+    <h1>{{ @result }}</h1>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

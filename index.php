@@ -22,10 +22,10 @@ $f3->route("GET /", function (){
     echo $view->render("views/home.html");
 });
 
-<<<<<<< HEAD
-$f3->route("GET|POST /signup", function ($f3, $cnxn){
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+$f3->route("GET|POST /signup", function ($f3, $cnxn) {
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $isValid = true;
         $f3->set("username", $_POST["username"]);
         $f3->set("password", $_POST["password"]);
@@ -56,13 +56,6 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn){
             $f3->reroute('/confirm');
         }
     }
-=======
-$f3->route("GET|POST /signup", function (){
-/*username
-password
-email
-accountType*/
->>>>>>> 9843d19dc806b3db4ff9218191e1572a4ccc0bdd
 
     $view = new Template();
     echo $view->render("views/signup.html");
@@ -72,18 +65,16 @@ $f3->route("GET /createcollection", function (){
     $view = new Template();
     echo $view->render("views/create-collection.html");
 });
-<<<<<<< HEAD
 
 $f3->route("GET|POST /confirm", function ($f3){
     $view = new Template();
     echo $view->render("views/success.html");
 });
 
-=======
 $f3->route("GET /login", function (){
     $view = new Template();
     echo $view->render("views/login.html");
 });
->>>>>>> 9843d19dc806b3db4ff9218191e1572a4ccc0bdd
+
 //Run Fat-Free
 $f3->run();

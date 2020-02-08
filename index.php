@@ -22,7 +22,6 @@ $f3->route("GET /", function (){
 });
 
 $f3->route("GET|POST /signup", function (){
-
 /*username
 password
 email
@@ -32,9 +31,13 @@ accountType*/
     echo $view->render("views/signup.html");
 });
 
-$f3->route("GET /login", function (){
+$f3->route("GET /createcollection", function (){
     $view = new Template();
     echo $view->render("views/create-collection.html");
+});
+$f3->route("GET /login", function (){
+    $view = new Template();
+    echo $view->render("views/login.html");
 });
 //Run Fat-Free
 $f3->run();

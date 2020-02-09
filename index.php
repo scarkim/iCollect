@@ -61,19 +61,24 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
     echo $view->render("views/signup.html");
 });
 
+$f3->route("GET|POST /login", function (){
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    }
+
+    $view = new Template();
+    echo $view->render("views/login.html");
+});
+
 $f3->route("GET /createcollection", function (){
     $view = new Template();
     echo $view->render("views/create-collection.html");
 });
 
-$f3->route("GET|POST /confirm", function ($f3){
+$f3->route("GET /confirm", function ($f3){
     $view = new Template();
     echo $view->render("views/success.html");
-});
-
-$f3->route("GET /login", function (){
-    $view = new Template();
-    echo $view->render("views/login.html");
 });
 
 //Run Fat-Free

@@ -20,3 +20,14 @@ function validEmail($email){
     }
     return false;
 }
+
+function validLogin($userName, $password) {
+    global $cnxn;
+
+    if (ctype_alnum($userName)) {
+        $sql = "SELECT * FROM `users` WHERE userName='$userName' AND password='$password'";
+        $searchResult = mysqli_query($cnxn, $sql);
+        return mysqli_num_rows($searchResult) != 0;
+    }
+    return false;
+}

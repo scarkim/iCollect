@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 //Required file
 require_once('vendor/autoload.php');
-require ("connection.php");
+require ("../../../connection.php");
 require_once('model/validate.php');
 
 //Instantiate Fat-Free
@@ -61,19 +61,44 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
     echo $view->render("views/signup.html");
 });
 
+$f3->route("GET|POST /login", function ($f3, $cnxn){
+
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $isValid = true;
+        $f3->set("username", $_POST["username"]);
+        $f3->set("password", $_POST["password"]);
+
+        if ($cnxn) {
+            if (validLogin($_POST["username"], $_POST["password"])) {
+                $_SESSION["username"] = $_POST["username"];
+            } else {
+                $f3->set("errors['login']", "Try again.");
+                $isValid = false;
+            }
+        } else {
+            $f3->set("errors['connection']", "No Connection.");
+            $isValid = false;
+        }
+
+        if ($isValid) {
+            $f3->reroute('/createcollection');
+        }
+    }
+
+    $view = new Template();
+    echo $view->render("views/login.html");
+});
+
 $f3->route("GET /createcollection", function (){
     $view = new Template();
     echo $view->render("views/create-collection.html");
 });
 
-$f3->route("GET|POST /confirm", function ($f3){
+$f3->route("GET /confirm", function ($f3){
     $view = new Template();
     echo $view->render("views/success.html");
-});
-
-$f3->route("GET /login", function (){
-    $view = new Template();
-    echo $view->render("views/login.html");
 });
 
 //Run Fat-Free

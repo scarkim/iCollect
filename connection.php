@@ -1,7 +1,7 @@
 <?php
-$username = "rcoxgree_grcuser";
-$password = "rcoxgree_grcuser";
+$username = "skimgree_grcuser";
+$password = "grcuserpassword";
 $hostname = "localhost";
-$database = "rcoxgree_icollect";
+$database = "skimgree_icollect";
 
 $cnxn = mysqli_connect($hostname, $username, $password, $database);

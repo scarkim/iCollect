@@ -41,7 +41,7 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
             }
 
             if (validEmail($_POST["email"])) {
-                $_SESSION["email"] = $_POST["username"];
+                $_SESSION["email"] = $_POST["email"];
             } else {
                 $f3->set("errors['email']", "Please choose another email.");
                 $isValid = false;
@@ -51,9 +51,15 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
             $isValid = false;
         }
 
-        //all inputs valid, go to next page
+        //all inputs valid and user is added to the database, go to next page
         if ($isValid) {
-            $f3->reroute('/confirm');
+            $_SESSION["password"] = $_POST["password"];
+            $_SESSION["accountType"] = $_POST["accountType"];
+            if(addNewUser()) {
+                $f3->reroute('/confirm');
+            } else {
+                $f3->set("errors['addNewUser']", "Something went wrong try again.");
+            }
         }
     }
 

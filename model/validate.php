@@ -12,7 +12,6 @@ function validUserName($userName) {
 
 function validEmail($email){
     global $cnxn;
-
     if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $sql = "SELECT * FROM `users` WHERE userEmail='$email'";
         $searchResult = mysqli_query($cnxn, $sql);

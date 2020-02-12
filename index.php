@@ -69,10 +69,7 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
 });
 
 $f3->route("GET|POST /login", function ($f3, $cnxn){
-<<<<<<< HEAD
 
-=======
->>>>>>> 94662377aa6c1809750c808783600ba8b9ab5781
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $isValid = true;

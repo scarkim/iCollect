@@ -18,13 +18,14 @@ $f3 = Base::instance();
 $f3->set('DEBUG', 3);
 
 $f3->route("GET /", function (){
+    $_SESSION['page']="iCollect";
     $view = new Template();
     echo $view->render("views/home.html");
 });
 
-
 $f3->route("GET|POST /signup", function ($f3, $cnxn) {
 
+    $_SESSION['page']="iCollect Signup";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $isValid = true;
         $f3->set("username", $_POST["username"]);
@@ -68,7 +69,10 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
 });
 
 $f3->route("GET|POST /login", function ($f3, $cnxn){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 94662377aa6c1809750c808783600ba8b9ab5781
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $isValid = true;
@@ -91,7 +95,6 @@ $f3->route("GET|POST /login", function ($f3, $cnxn){
             $f3->reroute('/createcollection');
         }
     }
-
     $view = new Template();
     echo $view->render("views/login.html");
 });

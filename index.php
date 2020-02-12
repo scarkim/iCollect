@@ -6,7 +6,7 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-//Required file
+//Required files
 require_once('vendor/autoload.php');
 require ("../../../connection.php");
 require_once('model/validate.php');
@@ -68,7 +68,6 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
 });
 
 $f3->route("GET|POST /login", function ($f3, $cnxn){
-
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

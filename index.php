@@ -51,7 +51,6 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
             $f3->set("errors['connection']", "No Connection.");
             $isValid = false;
         }
-
         //all inputs valid and user is added to the database, go to next page
         if ($isValid) {
             $_SESSION["password"] = $_POST["password"];

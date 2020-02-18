@@ -51,6 +51,7 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
             $f3->set("errors['connection']", "No Connection.");
             $isValid = false;
         }
+
         //all inputs valid and user is added to the database, go to next page
         if ($isValid) {
             $_SESSION["password"] = $_POST["password"];
@@ -68,7 +69,7 @@ $f3->route("GET|POST /signup", function ($f3, $cnxn) {
 });
 
 $f3->route("GET|POST /login", function ($f3, $cnxn){
-
+    $_SESSION['page']="iCollect Login";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $isValid = true;
@@ -96,6 +97,7 @@ $f3->route("GET|POST /login", function ($f3, $cnxn){
 });
 
 $f3->route("GET /createcollection", function (){
+    $_SESSION['page']="Create Collection";
     $view = new Template();
     echo $view->render("views/create-collection.html");
 });

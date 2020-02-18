@@ -1,110 +1,48 @@
 <?php
-//Start a session
-session_start();
-
 //Turn on error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //Required files
 require_once('vendor/autoload.php');
-require ("../../../connection.php");
 require_once('model/validate.php');
-
+//Start a session
+session_start();
 //Instantiate Fat-Free
 $f3 = Base::instance();
 
 //Turn on Fat-Free error reporting
 $f3->set('DEBUG', 3);
+$iController = new ICollectController($f3);
 
 $f3->route("GET /", function (){
-    $_SESSION['page']="iCollect";
-    $view = new Template();
-    echo $view->render("views/home.html");
+    global $iController;
+    $iController->home();
 });
 
-$f3->route("GET|POST /signup", function ($f3, $cnxn) {
-
-    $_SESSION['page']="iCollect Signup";
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $isValid = true;
-        $f3->set("username", $_POST["username"]);
-        $f3->set("password", $_POST["password"]);
-        $f3->set("email", $_POST["email"]);
-        $f3->set("accountType", $_POST["accountType"]);
-
-        if ($cnxn) {
-            if (validUserName($_POST["username"])) {
-                $_SESSION["username"] = $_POST["username"];
-            } else {
-                $f3->set("errors['username']", "Please choose another name.");
-                $isValid = false;
-            }
-
-            if (validEmail($_POST["email"])) {
-                $_SESSION["email"] = $_POST["email"];
-            } else {
-                $f3->set("errors['email']", "Please choose another email.");
-                $isValid = false;
-            }
-        } else {
-            $f3->set("errors['connection']", "No Connection.");
-            $isValid = false;
-        }
-
-        //all inputs valid and user is added to the database, go to next page
-        if ($isValid) {
-            $_SESSION["password"] = $_POST["password"];
-            $_SESSION["accountType"] = $_POST["accountType"];
-            if(addNewUser()) {
-                $f3->reroute('/confirm');
-            } else {
-                $f3->set("errors['addNewUser']", "Something went wrong try again.");
-            }
-        }
-    }
-
-    $view = new Template();
-    echo $view->render("views/signup.html");
+$f3->route("GET|POST /signup", function () {
+    global $iController;
+    $iController->signup();
 });
 
-$f3->route("GET|POST /login", function ($f3, $cnxn){
-    $_SESSION['page']="iCollect Login";
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$f3->route("GET|POST /login", function (){
+    global $iController;
+    $iController->login();
+});
 
-        $isValid = true;
-        $f3->set("username", $_POST["username"]);
-        $f3->set("password", $_POST["password"]);
-
-        if ($cnxn) {
-            if (validLogin($_POST["username"], $_POST["password"])) {
-                $_SESSION["username"] = $_POST["username"];
-            } else {
-                $f3->set("errors['login']", "Try again.");
-                $isValid = false;
-            }
-        } else {
-            $f3->set("errors['connection']", "No Connection.");
-            $isValid = false;
-        }
-
-        if ($isValid) {
-            $f3->reroute('/createcollection');
-        }
-    }
-    $view = new Template();
-    echo $view->render("views/login.html");
+$f3->route("GET /welcome", function (){
+    global $iController;
+    $iController->welcome();
 });
 
 $f3->route("GET /createcollection", function (){
-    $_SESSION['page']="Create Collection";
-    $view = new Template();
-    echo $view->render("views/create-collection.html");
+    global $iController;
+    $iController->createCollection();
 });
 
-$f3->route("GET /confirm", function ($f3){
-    $view = new Template();
-    echo $view->render("views/success.html");
+$f3->route("GET /success", function (){
+    global $iController;
+    $iController->success();
 });
 
 //Run Fat-Free

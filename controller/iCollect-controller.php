@@ -3,30 +3,31 @@
 class ICollectController {
     private $_f3;
     private $_validator;
-
-    public function __construct($f3)
+    private $_cnxn;
+    public function __construct($f3, $cnxn)
     {
         $this->_f3 = $f3;
         $this->_validator = new Validate();
+        $this->_cnxn = $cnxn;
     }
 
-    public function home() {
+    public function home()
+    {
         $_SESSION['page']="iCollect";
         $view = new Template();
         echo $view->render("views/home.html");
     }
 
-    public function login() {
-        require ("../../../connection.php");
+    public function login()
+    {
         $_SESSION['page']="iCollect Login";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             $isValid = true;
             $this->_f3->set("username", $_POST["username"]);
             $this->_f3->set("password", $_POST["password"]);
 
-            if ($cnxn) {
-                if ($this->_validator->validLogin($_POST["username"], $_POST["password"], $cnxn)) {
+            if ($this->_cnxn) {
+                if ($this->_validator->validLogin($_POST["username"]) AND  $this->_cnxn->checkCredentials($_POST["username"], $_POST['password'])) {
                     $_SESSION["username"] = $_POST["username"];
                 } else {
                     $this->_f3->set("errors['login']", "Try again.");
@@ -55,15 +56,15 @@ class ICollectController {
             $this->_f3->set("email", $_POST["email"]);
             $this->_f3->set("accountType", $_POST["accountType"]);
 
-            if ($cnxn) {
-                if ($this->_validator->validUserName($_POST["username"], $cnxn)) {
+            if ($this->_cnxn) {
+                if ($this->_validator->validUserName($_POST["username"], $this->_cnxn)) {
                     $_SESSION["username"] = $_POST["username"];
                 } else {
                     $this->_f3->set("errors['username']", "Please choose another name.");
                     $isValid = false;
                 }
 
-                if ($this->_validator->validEmail($_POST["email"], $cnxn)) {
+                if ($this->_validator->validEmail($_POST["email"], $this->_cnxn)) {
                     $_SESSION["email"] = $_POST["email"];
                 } else {
                     $this->_f3->set("errors['email']", "Please choose another email.");
@@ -78,7 +79,7 @@ class ICollectController {
             if ($isValid) {
                 $_SESSION["password"] = $_POST["password"];
                 $_SESSION["accountType"] = $_POST["accountType"];
-                if($this->_validator->addNewUser($cnxn)) {
+                if($this->_validator->addNewUser($this->_cnxn)) {
                     $this->_f3->reroute('/success');
                 } else {
                     $this->_f3->set("errors['addNewUser']", "Something went wrong try again.");

@@ -1,7 +1,7 @@
 <include href="views/header.html" />
 <include href="views/site-nav.html"></include>
 <div class = "container">
-    <form action="#" id="new-user-form" method="post">
+    <form action="#" id="new-user-form" name="signup" method="post">
         <h1>Sign Up</h1>
         <div class="positioner input-effect form-inline">
             <label for="username">Username</label>
@@ -24,7 +24,6 @@
         <div class="form-group">
             <div class="form-inline">
                 <h4>Account Type: &nbsp;</h4>
-
                 <a href="http://www.google.com" target="_blank"  data-toggle="modal" data-target="#exampleModal">
                     <img src = "images/info-icon.png" width="15px">
                 </a>
@@ -68,7 +67,7 @@
             </label>
         </div>
         <br>
-        <button type="submit">Create Account</button>
+        <input class="btn btn-primary" type="submit" id="submit" value="Create Account">
     </form>
     <check if="{{ @errors['username'] }}">
         <h1>{{ @errors['username'] }}</h1>

@@ -4,7 +4,7 @@
     <form action="#" id="new-user-form" name="signup" method="post">
         <h1>Sign Up</h1>
         <div class="positioner input-effect form-inline">
-            <label for="username">Username</label>
+            <label for="username" id="label-username">Username<span class="err" id="err-username">*alpha-numeric only</span></label>
             <input class="effect-1" type="text" placeholder="Username"
                    name="username" id="username" value="{{ @username }}">
             <span class="focus-border"></span>
@@ -16,7 +16,7 @@
             <span class="focus-border"></span>
         </div>
         <div class="positioner input-effect form-inline">
-            <label for="email">Email</label>
+            <label for="email">Email <span class="err" id="err-email">*valid email required</span></label>
             <input class="effect-1" type="text" placeholder="Email"
                    name = "email" id="email" value="{{ @email }}">
             <span class="focus-border"></span>

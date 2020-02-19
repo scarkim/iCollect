@@ -3,24 +3,28 @@ if (document.title === "iCollect Signup" || document.title === "iCollect Login")
     let form = document.getElementsByTagName("form");
 
     if (document.title === "iCollect Signup") {
+
+        let errUserName = document.getElementById("err-username");
+        let errEmail = document.getElementById("err-email");
+        errUserName.style.visibility = "hidden";
+        errEmail.style.visibility = "hidden";
         form[0].onsubmit = validateSignup;
-        let username = document.getElementById("username").value;
-        let email = document.getElementById("email").value;
-        let err = document.createElement('span');
+
+
         function validateSignup() {
+            errUserName.style.visibility = "hidden";
+            errEmail.style.visibility = "hidden";
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
             let isValid = true;
 
-            err.innerHTML = "";
-            err.style.color = "red";
-            document.body.appendChild(err);
-
             if (username === "") {
-                err.innerHTML += "Username empty";
+                errUserName.style.visibility = "visible";
                 isValid = false;
             }
 
             if (email === "") {
-                err.innerHTML += "Email empty";
+                errEmail.style.visibility = "visible";
                 isValid = false;
             }
 

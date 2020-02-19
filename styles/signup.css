@@ -72,3 +72,10 @@ input[type="password"]{
     font-style: italic;
     word-wrap: break-word;
 }
+#default-profile {
+    /*float:left;*/
+    width: 180px;
+}
+.card {
+    margin: 15px;
+}

@@ -20,7 +20,6 @@ class ICollectController {
         require ("../../../connection.php");
         $_SESSION['page']="iCollect Login";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             $isValid = true;
             $this->_f3->set("username", $_POST["username"]);
             $this->_f3->set("password", $_POST["password"]);
@@ -36,7 +35,6 @@ class ICollectController {
                 $this->_f3->set("errors['connection']", "No Connection.");
                 $isValid = false;
             }
-
             if ($isValid) {
                 $this->_f3->reroute('/welcome');
             }

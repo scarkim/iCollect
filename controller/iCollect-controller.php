@@ -57,7 +57,7 @@ class ICollectController {
             $this->_f3->set("accountType", $_POST["accountType"]);
 
             if ($this->_cnxn) {
-                if ($this->_validator->validLogin($_POST["username"])) {
+                if ($this->_validator->validLogin($_POST["username"]) AND !$this->_cnxn->containsUsername($_POST["username"])) {
                     $_SESSION["username"] = $_POST["username"];
                 } else {
                     $this->_f3->set("errors['username']", "Please choose another name.");

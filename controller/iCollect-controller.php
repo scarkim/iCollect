@@ -57,14 +57,14 @@ class ICollectController {
             $this->_f3->set("accountType", $_POST["accountType"]);
 
             if ($this->_cnxn) {
-                if ($this->_validator->validUserName($_POST["username"], $this->_cnxn)) {
+                if ($this->_validator->validLogin($_POST["username"])) {
                     $_SESSION["username"] = $_POST["username"];
                 } else {
                     $this->_f3->set("errors['username']", "Please choose another name.");
                     $isValid = false;
                 }
-
-                if ($this->_validator->validEmail($_POST["email"], $this->_cnxn)) {
+                //add db function
+                if ($this->_validator->validEmail($_POST["email"]) AND !$this->_cnxn->containsEmail($_POST["email"]) ) {
                     $_SESSION["email"] = $_POST["email"];
                 } else {
                     $this->_f3->set("errors['email']", "Please choose another email.");
@@ -79,7 +79,7 @@ class ICollectController {
             if ($isValid) {
                 $_SESSION["password"] = $_POST["password"];
                 $_SESSION["accountType"] = $_POST["accountType"];
-                if($this->_validator->addNewUser($this->_cnxn)) {
+                if($this->_cnxn->addNewUser($this->_cnxn)) {
                     $this->_f3->reroute('/success');
                 } else {
                     $this->_f3->set("errors['addNewUser']", "Something went wrong try again.");

@@ -4,19 +4,45 @@
     <form action="#" id="new-user-form" name="signup" method="post">
         <h1>Sign Up</h1>
         <div class="positioner input-effect form-inline">
-            <label for="username" id="label-username">Username<span class="err" id="err-username">*alpha-numeric only</span></label>
+            <label for="username" id="label-username">Username
+                <span class="err" id="err-username">*alpha-numeric only</span>
+                <check if="{{ @errors['username'] }}">
+                    <span class="err" >{{ @errors['username'] }}</span>
+                </check>
+            </label>
             <input class="effect-1" type="text" placeholder="Username"
                    name="username" id="username" value="{{ @username }}">
             <span class="focus-border"></span>
         </div>
         <div class="positioner input-effect form-inline">
-            <label for="password">Password</label>
+            <label for="password">Password
+                <span class="err" id="err-password">*required</span>
+                <check if="{{ @errors['password'] }}">
+                    <span class="err">{{ @errors['password'] }}</span>
+                </check>
+            </label>
             <input class="effect-1" type="password" placeholder="Password"
-                   name = "password" id="password">
+                   name = "password" id="password" value="{{ @password }}">
             <span class="focus-border"></span>
         </div>
         <div class="positioner input-effect form-inline">
-            <label for="email">Email <span class="err" id="err-email">*valid email required</span></label>
+            <label for="password2">Re-enter Password
+                <span class="err" id="err-password2">*not a match</span>
+                <check if="{{ @errors['passwordMatch'] }}">
+                    <span class="err">{{ @errors['passwordMatch'] }}</span>
+                </check>
+            </label>
+            <input class="effect-1" type="password" placeholder="Re-enter Password"
+                   name = "password2" id="password2" value="{{ @password2 }}">
+            <span class="focus-border"></span>
+        </div>
+        <div class="positioner input-effect form-inline">
+            <label for="email">Email
+                <span class="err" id="err-email">*valid email required</span>
+                <check if="{{ @errors['email'] }}">
+                    <span class="err">{{ @errors['email'] }}</span>
+                </check>
+            </label>
             <input class="effect-1" type="text" placeholder="Email"
                    name = "email" id="email" value="{{ @email }}">
             <span class="focus-border"></span>
@@ -27,6 +53,10 @@
                 <a href="http://www.google.com" target="_blank"  data-toggle="modal" data-target="#exampleModal">
                     <img src = "images/info-icon.png" width="15px">
                 </a>
+                <span class="err" id="err-acct-type">hmmm...try again</span>
+                <check if="{{ @errors['acctType'] }}">
+                    <span class="err">{{ @errors['acctType'] }}</span>
+                </check>
                 <!-- Button trigger modal -->
 
                 <!-- START Modal -->
@@ -69,17 +99,11 @@
         <br>
         <input class="btn btn-primary" type="submit" id="submit" value="Create Account">
     </form>
-    <check if="{{ @errors['username'] }}">
-        <h1>{{ @errors['username'] }}</h1>
-    </check>
-    <check if="{{ @errors['email'] }}">
-        <h1>{{ @errors['email'] }}</h1>
-    </check>
     <check if="{{ @errors['connection'] }}">
-        <h1>{{ @errors['connection'] }}</h1>
+        <span class="err">{{ @errors['connection'] }}</span>
     </check>
     <check if="{{ @errors['addNewUser'] }}">
-        <h1>{{ @errors['addNewUser'] }}</h1>
+        <span class="err">{{ @errors['addNewUser'] }}</span>
     </check>
 </div>
 

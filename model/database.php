@@ -28,8 +28,6 @@ class Database
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             //do the steps from class skip binding params
             return $result;
-<<<<<<< HEAD
-=======
     }
     function addNewUser() {
         $username = $_SESSION['username'];
@@ -64,7 +62,6 @@ class Database
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         //do the steps from class skip binding params
         return $result;
->>>>>>> 791da9433b91f3919ede831b568d9bd28133b69a
     }
 }
 

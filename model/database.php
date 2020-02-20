@@ -27,7 +27,7 @@ class Database
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             //do the steps from class skip binding params
-            return $result->rowCount()!=0;
+            return $result;
     }
 }
 

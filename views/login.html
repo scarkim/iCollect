@@ -4,14 +4,18 @@
     <form action="#" id="new-user-form" method="post">
         <h1>Login</h1>
         <div class="positioner input-effect form-inline">
-            <label for="username">Username</label>
+            <label for="username">Username
+                <span class="err" id="err-username">*invalid username</span>
+            </label>
             <input class="effect-1" type="text" placeholder="Username"
                    name="username" id="username">
             <span class="focus-border"></span>
         </div>
 
         <div class="positioner input-effect form-inline">
-            <label for="password">Password</label>
+            <label for="password">Password
+                <span class="err" id="err-password">*required</span>
+            </label>
             <input class="effect-1" type="password" placeholder="Password"
                    name = "password" id="password">
             <span class="focus-border"></span>

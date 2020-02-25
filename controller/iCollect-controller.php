@@ -4,11 +4,12 @@ class ICollectController {
     private $_f3;
     private $_validator;
     private $_cnxn;
-    public function __construct($f3, $cnxn)
+
+    public function __construct($f3)
     {
         $this->_f3 = $f3;
         $this->_validator = new Validate();
-        $this->_cnxn = $cnxn;
+        $this->_cnxn = new Database();
     }
 
     public function home()
@@ -21,13 +22,15 @@ class ICollectController {
     public function login()
     {
         $_SESSION['page']="iCollect Login";
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
             $this->_f3->set("username", $_POST["username"]);
             $this->_f3->set("password", $_POST["password"]);
 
             if ($this->_cnxn) {
-                if ($this->_validator->validLogin($_POST["username"]) AND  $this->_cnxn->checkCredentials($_POST["username"], $_POST['password'])) {
+                if ($this->_validator->validLogin($_POST["username"]) AND
+                    $this->_cnxn->checkCredentials($_POST["username"], $_POST['password'])) {
                     $_SESSION["username"] = $_POST["username"];
                 } else {
                     $this->_f3->set("errors['login']", "Try again.");

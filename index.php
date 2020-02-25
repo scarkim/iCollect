@@ -13,8 +13,8 @@ $f3 = Base::instance();
 
 //Turn on Fat-Free error reporting
 $f3->set('DEBUG', 3);
-$cnxn = new Database();
-$iController = new ICollectController($f3, $cnxn);
+
+$iController = new ICollectController($f3);
 
 $f3->route("GET /", function (){
     global $iController;

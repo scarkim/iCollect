@@ -1,9 +1,10 @@
 <include href="views/header.html" />
 <include href="views/site-nav.html"></include>
 <h1>Success!</h1>
-<p>{{ @SESSION.username }}</p>
-<p>{{ @SESSION.password }}</p>
-<p>{{ @SESSION.email }}</p>
-<p>{{ @SESSION.accountType }}</p>
+<p>{{ @SESSION["user"]->getUserID() }}</p>
+<p>{{ @SESSION["user"]->getUsername() }}</p>
+<p>{{ @SESSION["user"]->getPassword() }}</p>
+<p>{{ @SESSION["user"]->getUserEmail() }}</p>
+<p>{{ @SESSION["user"]->getPremium() }}</p>
 <a href="welcome">Continue</a>
 <include href="views/footer.html" />

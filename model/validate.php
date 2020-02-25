@@ -21,4 +21,8 @@ class Validate {
     function passwordMatch($pass1, $pass2) {
         return $pass2 != "" AND $pass1 == $pass2;
     }
+
+    function validateAcctType($acctType) {
+        return $acctType === "0" OR $acctType === "1";
+    }
 }

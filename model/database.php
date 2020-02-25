@@ -29,17 +29,22 @@ class Database
             //do the steps from class skip binding params
             return $result;
     }
-    function addNewUser() {
-        $username = $_SESSION['username'];
-        $password =  $_SESSION['password'];
-        $userEmail = $_SESSION['email'];
-        $accountType = $_SESSION['accountType'];
+    function addNewUser($user) {
+        $username = $user->getUsername();
+        $password =  $user->getPassword();
+        $userEmail = $user->getUserEmail();
+        $accountType = $user->getPremium();
         $sql = "INSERT INTO `users` (userName, password, userEmail, premium) 
             VALUES ('$username', '$password', '$userEmail', '$accountType')";
         $statement = $this->_cnxn->prepare($sql);
-        return $statement->execute();
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
+
         //get the primary key of the last inserted row (in this case it is sid)
-        //$id = $this->_cnxn->lastInsertId();
+        //$id =
     }
     function containsEmail($email)
     {

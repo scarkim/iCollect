@@ -124,6 +124,10 @@ class ICollectController {
 
     public function welcome() {
         $_SESSION['page']="Welcome";
+        if (!isset($_SESSION["user"])) {
+            $this->_f3->reroute('/');
+        }
+
         $view = new Template();
         echo $view->render("views/welcome.html");
     }
@@ -136,7 +140,17 @@ class ICollectController {
 
     public function success() {
         $_SESSION['page']="Sign Up Success";
+
+        if (!isset($_SESSION["user"])) {
+            $this->_f3->reroute('/');
+        }
+
         $view = new Template();
         echo $view->render("views/success.html");
+    }
+
+    public function logout() {
+        unset($_SESSION["user"]);
+        $this->_f3->reroute('/');
     }
 }

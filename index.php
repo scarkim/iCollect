@@ -46,5 +46,10 @@ $f3->route("GET /success", function (){
     $iController->success();
 });
 
+$f3->route("GET|POST /logout", function (){
+    global $iController;
+    $iController->logout();
+});
+
 //Run Fat-Free
 $f3->run();

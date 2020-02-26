@@ -2,7 +2,8 @@
 <include href="views/site-nav.html"></include>
 <div class = "container">
 <div class="float-left">
-    <h1>Welcome, {{ @SESSION['username'] }}!</h1>
+    <h1>Welcome, {{ @SESSION['user']->getUsername() }}!</h1>
+    <h3>User ID: {{ @SESSION['user']->getUserID() }}</h3>
     <img  id = "default-profile" src = "images/default-profile.png">
     <br><br>
     <a href="#">Create a new collection</a>

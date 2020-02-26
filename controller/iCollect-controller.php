@@ -32,7 +32,9 @@ class ICollectController {
             if ($this->_cnxn) {
                 if ($this->_validator->validLogin($_POST["username"]) AND
                     $this->_cnxn->checkCredentials($_POST["username"], $_POST['password'])) {
-                    $_SESSION["username"] = $_POST["username"];
+
+                    $this->_user = $this->_cnxn->getUser($_POST["username"]);
+                    $_SESSION["user"] = $this->_user;
                 } else {
                     $this->_f3->set("errors['login']", "Try again.");
                     $isValid = false;
@@ -51,7 +53,6 @@ class ICollectController {
     }
 
     public function signup() {
-        require ("../../../connection.php");
         $_SESSION['page']="iCollect Signup";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
@@ -72,36 +73,27 @@ class ICollectController {
             }
 
             if ($this->_cnxn) {
-                if ($this->_validator->validLogin($_POST["username"]) AND !$this->_cnxn->containsUsername($_POST["username"])) {
-                    $this->_user->setUsername($_POST["username"]);
-                } else {
+                if (!$this->_validator->validLogin($_POST["username"]) OR $this->_cnxn->containsUsername($_POST["username"])) {
                     $this->_f3->set("errors['username']", "Please choose another name.");
                     $isValid = false;
                 }
-                //add db function
-                if ($this->_validator->validEmail($_POST["email"]) AND !$this->_cnxn->containsEmail($_POST["email"]) ) {
-                    $this->_user->setUserEmail($_POST["email"]);
-                } else {
+
+                if (!$this->_validator->validEmail($_POST["email"]) OR $this->_cnxn->containsEmail($_POST["email"]) ) {
                     $this->_f3->set("errors['email']", "Please choose another email.");
                     $isValid = false;
                 }
 
                 if ($this->_validator->validPassword($_POST["password"])) {
-                    if ($this->_validator->passwordMatch($_POST["password"], $_POST["password2"])) {
-                        $this->_user->setPassword($_POST["password"]);
-                    } else {
+                    if (!$this->_validator->passwordMatch($_POST["password"], $_POST["password2"])) {
                         $this->_f3->set("errors['passwordMatch']", "*not a match");
                         $isValid = false;
                     }
-
                 } else {
                     $this->_f3->set("errors['password']", "*required");
                     $isValid = false;
                 }
 
-                if ($this->_validator->validateAcctType($_POST["accountType"])) {
-                    $this->_user->setPremium($_POST["accountType"]);
-                } else {
+                if (!$this->_validator->validateAcctType($_POST["accountType"])) {
                     $this->_f3->set("errors['acctType']", "I don't think so");
                     $isValid = false;
                 }
@@ -112,6 +104,9 @@ class ICollectController {
 
             //all inputs valid and user is added to the database, go to next page
             if ($isValid) {
+                $this->_user->setUsername($_POST["username"]);
+                $this->_user->setUserEmail($_POST["email"]);
+                $this->_user->setPremium($_POST["accountType"]);
                 $id = $this->_cnxn->addNewUser($this->_user);
                 if($id != null) {
                     $this->_user->setUserID($id);

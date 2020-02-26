@@ -68,6 +68,19 @@ class Database
         //do the steps from class skip binding params
         return $result;
     }
+
+    function getUser($username) {
+        $sql = "SELECT * FROM `users` WHERE userName='$username'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $user = new User();
+        $user->setUserID($result["userID"]);
+        $user->setUsername($result["userName"]);
+        $user->setUserEmail($result["userEmail"]);
+        $user->setPremium($result["premium"]);
+        return $user;
+    }
 }
 
 

@@ -40,6 +40,10 @@ $f3->route("GET /createcollection", function (){
     global $iController;
     $iController->createCollection();
 });
+$f3->route("GET /addItem", function (){
+    global $iController;
+    $iController->addItem();
+});
 
 $f3->route("GET /success", function (){
     global $iController;

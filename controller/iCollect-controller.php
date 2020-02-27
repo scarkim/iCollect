@@ -137,6 +137,11 @@ class ICollectController {
         $view = new Template();
         echo $view->render("views/create-collection.html");
     }
+    public function addItem() {
+        $_SESSION['page']="Add an item to your collection";
+        $view = new Template();
+        echo $view->render("views/add-item.html");
+    }
 
     public function success() {
         $_SESSION['page']="Sign Up Success";

@@ -1,0 +1,23 @@
+<include href="views/header.html" />
+<include href="views/site-nav.html"></include>
+<div class = "container">
+    <form action="#" id="collection-form" method="post">
+        <h1 align="center">Collection Name Goes Here</h1>
+        <h3>Add an item</h3>
+        <div class="form-group form-inline positioner input-effect">
+            <label for = "title">Title: </label>
+            <input id = "title" class="effect-1" type="text"
+                   placeholder="Title" name="title">
+            <span class="focus-border"></span>
+        </div>
+        <div class="form-group form-inline">
+            <label for="description">Item Description: &nbsp;</label>
+            <textarea id = "description" name="description"
+                      rows="5" cols="55"></textarea>
+        </div>
+        <div class="form-group">
+            <button>Add Item</button> &nbsp;
+        </div>
+    </form>
+</div>
+<include href="views/footer.html" />

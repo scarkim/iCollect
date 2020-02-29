@@ -6,11 +6,14 @@ class ICollectController {
     private $_cnxn;
     private $_user;
 
-    public function __construct($f3)
+    public function __construct()
     {
-        $this->_f3 = $f3;
+        //Instantiate Fat-Free
+        $this->_f3 = Base::instance();
         $this->_validator = new Validate();
         $this->_cnxn = new Database();
+        //Turn on Fat-Free error reporting
+        $this->_f3->set('DEBUG', 3);
     }
 
     public function home()
@@ -157,5 +160,13 @@ class ICollectController {
     public function logout() {
         unset($_SESSION["user"]);
         $this->_f3->reroute('/');
+    }
+
+    /**
+     * @return Base
+     */
+    public function getF3()
+    {
+        return $this->_f3;
     }
 }

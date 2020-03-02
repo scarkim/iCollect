@@ -80,6 +80,16 @@ class Database
         $user->setPremium($result["premium"]);
         return $user;
     }
+    function insertItem($itemID, $name, $description, $image, $collection_id ){
+        $sql = "INSERT INTO `collectionItems` (itemID, itemName, itemDescription, itemImage, collectionID) 
+            VALUES ('$itemID', '$name', '$description', '$image', '$collection_id')";
+        $statement = $this->_cnxn->prepare($sql);
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
+    }
 }
 
 

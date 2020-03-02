@@ -25,4 +25,9 @@ class Validate {
     function validateAcctType($acctType) {
         return $acctType === "0" OR $acctType === "1";
     }
+
+    function validItem($item) {
+
+
+    }
 }

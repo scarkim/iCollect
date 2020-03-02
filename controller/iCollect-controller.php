@@ -141,7 +141,16 @@ class ICollectController {
         echo $view->render("views/create-collection.html");
     }
     public function addItem() {
-        $_SESSION['page']="Add an item to your collection";
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $isValid = true;
+            $_SESSION['page'] = "Add an item to your collection";
+            $this->_f3->set("id", ""); //change this to the auto incrementing id
+            $this->_f3->set("name", $_POST["name"]);
+            $this->_f3->set("description", $_POST["description"]);
+            $this->_f3->set("image", $_POST["image"]); //adding later
+            $this->_cnxn->insertItem($_POST["id"], $_POST["name"], "description", $_POST["image"], $_SESSION["collection"]->getCollectionID());
+
+        }
         $view = new Template();
         echo $view->render("views/add-item.html");
     }

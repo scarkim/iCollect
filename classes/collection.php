@@ -13,7 +13,7 @@ class Collection
      * @param $_description
      * @param $_premium
      */
-    public function __construct($_name, $_description, $_premium)
+    public function __construct($_name=null, $_description=null, $_premium=null)
     {
         $this->_name = $_name;
         $this->_description = $_description;

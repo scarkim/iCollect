@@ -6,19 +6,40 @@
 
         <div class="form-group form-inline positioner input-effect">
             <label for = "title">Title: </label>
+            <check if="{{ @errors['invalidCollectionName'] }}">
+                <span class="err"> {{ @errors['invalidCollectionName'] }}</span>
+            </check>
             <input id = "title" class="effect-1" type="text"
                    placeholder="Title" name="title">
             <span class="focus-border"></span>
         </div>
-        <div class="form-group form-inline">
-            <label for="description">Description: &nbsp;</label>
-            <textarea id = "description" name="description"
-                      rows="5" cols="55"></textarea>
+        <div class="form-group ">
+            <label class="col-form-label text-left" for="description">Description: </label>
+            <check if="{{ @errors['invalidCollectionDescription'] }}">
+                <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
+            </check>
+            <textarea class="form-control" id = "description" name="description"
+                          rows="5" placeholder="Max 200 characters."></textarea>
+
         </div>
+        <check if="{{ @SESSION['user']->getPremium() === '1' }}">
+            <div class="form-check" id="attribute-check">
+                <input type="checkbox" class="form-check-input"
+                       id="add-attributes" name="add-attributes">
+                <label class="form-check-label"
+                       for="add-attributes">
+                    Add new item attributes to collection.
+                </label>
+            </div>
+        </check>
+        <hr>
         <div class="form-group">
-            <button>Add Attributes</button> &nbsp;
-        <button>Create Collection</button>
+            <!--<button type="submit" class="btn btn-success" name="add">Add Attributes</button>-->
+            <button type="submit" class="btn btn-primary" name="create">Create Collection</button>
         </div>
     </form>
+    <check if="{{ @errors['addCollection'] }}">
+        <div><span class="err"> {{ @errors['addCollection'] }}</span></div>
+    </check>
 </div>
 <include href="views/footer.html" />

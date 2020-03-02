@@ -26,8 +26,31 @@ class Validate {
         return $acctType === "0" OR $acctType === "1";
     }
 
+<<<<<<< HEAD
     function validItem($item) {
 
 
     }
+=======
+    function validCollectionName($name) {
+
+        if (sizeof($name) > 50) return false;
+        $array = str_split($name);
+        foreach ($array AS $char)
+        if(!ctype_alnum($char) AND !ctype_space($char)) {
+            return false;
+        }
+        return true;
+    }
+
+ function validCollectionDecription($description) {
+     if (sizeof($description) > 200) return false;
+     $array = str_split($description);
+     foreach ($array AS $char)
+         if(!ctype_alnum($char) AND !ctype_space($char)) {
+             return false;
+         }
+     return true;
+ }
+>>>>>>> bb24302fb8485e257f4e6b6403e3ea9f72fdea4c
 }

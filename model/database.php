@@ -29,9 +29,8 @@ class Database
             //do the steps from class skip binding params
             return $result;
     }
-    function addNewUser($user) {
+    function addNewUser($user, $password) {
         $username = $user->getUsername();
-        $password =  $user->getPassword();
         $userEmail = $user->getUserEmail();
         $accountType = $user->getPremium();
         $sql = "INSERT INTO `users` (userName, password, userEmail, premium) 

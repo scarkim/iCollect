@@ -110,7 +110,7 @@ class ICollectController {
                 $this->_user->setUsername($_POST["username"]);
                 $this->_user->setUserEmail($_POST["email"]);
                 $this->_user->setPremium($_POST["accountType"]);
-                $id = $this->_cnxn->addNewUser($this->_user);
+                $id = $this->_cnxn->addNewUser($this->_user, $_POST["password"]);
                 if($id != null) {
                     $this->_user->setUserID($id);
                     $_SESSION["user"] = $this->_user;

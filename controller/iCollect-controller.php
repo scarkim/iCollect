@@ -176,8 +176,6 @@ class ICollectController {
                 }
             }
         }
-
-
         $view = new Template();
         echo $view->render("views/create-collection.html");
     }
@@ -188,9 +186,8 @@ class ICollectController {
             $this->_f3->set("id", ""); //change this to the auto incrementing id
             $this->_f3->set("name", $_POST["name"]);
             $this->_f3->set("description", $_POST["description"]);
-            $this->_f3->set("image", $_POST["image"]); //adding later
-            $this->_cnxn->insertItem($_POST["id"], $_POST["name"], "description", $_POST["image"], $_SESSION["collection"]->getCollectionID());
-
+//            $this->_f3->set("image", $_POST["image"]); //adding later
+            $this->_db->insertItem($_POST["name"], $_POST["description"], " ", 1);
         }
         $view = new Template();
         echo $view->render("views/add-item.html");

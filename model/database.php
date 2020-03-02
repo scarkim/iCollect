@@ -80,11 +80,17 @@ class Database
         $user->setPremium($result["premium"]);
         return $user;
     }
-<<<<<<< HEAD
-    function insertItem($itemID, $name, $description, $image, $collection_id ){
-        $sql = "INSERT INTO `collectionItems` (itemID, itemName, itemDescription, itemImage, collectionID) 
-            VALUES ('$itemID', '$name', '$description', '$image', '$collection_id')";
-=======
+
+    function insertItem( $name, $description, $image, $collection_id ){
+        $sql = "INSERT INTO `collectionItems` (itemName, itemDescription, itemImage, collectionID) 
+            VALUES ('$name', '$description', '$image', '$collection_id')";
+   $statement = $this->_cnxn->prepare($sql);
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
+    }
 
     function addCollection($collection) {
         $userID = $_SESSION["user"]->getUserID();
@@ -93,7 +99,6 @@ class Database
         $collectionType = $collection->getPremium();
         $sql = "INSERT INTO `userCollections` (userID, collectionName, collectionDescription, premium) 
             VALUES ('$userID', '$name', '$descr', '$collectionType')";
->>>>>>> bb24302fb8485e257f4e6b6403e3ea9f72fdea4c
         $statement = $this->_cnxn->prepare($sql);
         if ($statement->execute()) {
             return $this->_cnxn->lastInsertId();

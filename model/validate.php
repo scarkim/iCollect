@@ -26,12 +26,12 @@ class Validate {
         return $acctType === "0" OR $acctType === "1";
     }
 
-<<<<<<< HEAD
+
     function validItem($item) {
 
 
     }
-=======
+
     function validCollectionName($name) {
 
         if (sizeof($name) > 50) return false;
@@ -52,5 +52,5 @@ class Validate {
          }
      return true;
  }
->>>>>>> bb24302fb8485e257f4e6b6403e3ea9f72fdea4c
+
 }

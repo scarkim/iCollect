@@ -31,7 +31,7 @@ $iController->getF3()->route("GET /welcome", function (){
     $iController->welcome();
 });
 
-$iController->getF3()->route("GET /createcollection", function (){
+$iController->getF3()->route("GET|POST /createcollection", function (){
     global $iController;
     $iController->createCollection();
 });

@@ -80,6 +80,21 @@ class Database
         $user->setPremium($result["premium"]);
         return $user;
     }
+
+    function addCollection($collection) {
+        $userID = $_SESSION["user"]->getUserID();
+        $name = $collection->getName();
+        $descr = $collection->getDescription();
+        $collectionType = $collection->getPremium();
+        $sql = "INSERT INTO `userCollections` (userID, collectionName, collectionDescription, premium) 
+            VALUES ('$userID', '$name', '$descr', '$collectionType')";
+        $statement = $this->_cnxn->prepare($sql);
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
+    }
 }
 
 

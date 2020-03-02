@@ -4,7 +4,7 @@ class User
 
     private $_userID;
     private $_username;
-    private $_password;
+    //private $_password;
     private $_premium;
     private $_userEmail;
 
@@ -15,10 +15,10 @@ class User
      * @param $premium
      * @param $userEmail
      */
-    public function __construct($username = null, $password=null, $premium=null, $userEmail=null)
+    public function __construct($username = null, /*$password=null,*/ $premium=null, $userEmail=null)
     {
         $this->_username = $username;
-        $this->_password = $password;
+        //$this->_password = $password;
         $this->_premium = $premium;
         $this->_userEmail = $userEmail;
     }
@@ -57,18 +57,18 @@ class User
     /**
      * @return mixed
      */
-    public function getPassword()
+    /*public function getPassword()
     {
         return $this->_password;
-    }
+    }*/
 
     /**
      * @param mixed $password
      */
-    public function setPassword($password)
+    /*public function setPassword($password)
     {
         $this->_password = $password;
-    }
+    }*/
 
     /**
      * @return mixed

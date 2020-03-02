@@ -7,6 +7,9 @@
             <label for="username">Username
                 <span class="err" id="err-username">*invalid username</span>
             </label>
+            <check if="{{ @errors['login'] }}">
+                <span class="err">{{ @errors['validLogin'] }}</span>
+            </check>
             <input class="effect-1" type="text" placeholder="Username"
                    name="username" id="username">
             <span class="focus-border"></span>
@@ -20,17 +23,17 @@
                    name = "password" id="password">
             <span class="focus-border"></span>
         </div>
-        <div>
+        <!--<div>
             <a id = "forgotpw" href="#">Forgot password?</a>
-        </div>
+        </div>-->
         <br>
         <button type="submit" id="submit">Login</button>
     </form>
     <check if="{{ @errors['login'] }}">
-        <h1>{{ @errors['login'] }}</h1>
+        <span class="err">{{ @errors['login'] }}</span>
     </check>
     <check if="{{ @errors['connection'] }}">
-        <h1>{{ @errors['connection'] }}</h1>
+        <span class="err">{{ @errors['connection'] }}</span>
     </check>
 </div>
 <include href="views/footer.html" />

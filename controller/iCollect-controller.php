@@ -3,7 +3,7 @@
 class ICollectController {
     private $_f3;
     private $_validator;
-    private $_cnxn;
+    private $_db;
     private $_user;
 
     public function __construct()
@@ -11,7 +11,7 @@ class ICollectController {
         //Instantiate Fat-Free
         $this->_f3 = Base::instance();
         $this->_validator = new Validate();
-        $this->_cnxn = new Database();
+        $this->_db = new Database();
         //Turn on Fat-Free error reporting
         $this->_f3->set('DEBUG', 3);
     }
@@ -32,22 +32,24 @@ class ICollectController {
             $this->_f3->set("username", $_POST["username"]);
             $this->_f3->set("password", $_POST["password"]);
 
-            if ($this->_cnxn) {
-                if ($this->_validator->validLogin($_POST["username"]) AND
-                    $this->_cnxn->checkCredentials($_POST["username"], $_POST['password'])) {
+            if ($this->_db) {
+                if (!$this->_validator->validLogin($_POST["username"])) {
+                    $this->_f3->set("errors['invalidLogin']", "*invalid username.");
+                    $isValid = false;
+                }
 
-                    $this->_user = $this->_cnxn->getUser($_POST["username"]);
-                    $_SESSION["user"] = $this->_user;
-                } else {
+                if (!$this->_db->checkCredentials($_POST["username"], $_POST['password'])) {
                     $this->_f3->set("errors['login']", "Try again.");
                     $isValid = false;
                 }
+
             } else {
                 $this->_f3->set("errors['connection']", "No Connection.");
                 $isValid = false;
             }
 
             if ($isValid) {
+                $_SESSION["user"] = $this->_db->getUser($_POST["username"]);
                 $this->_f3->reroute('/welcome');
             }
         }
@@ -65,7 +67,7 @@ class ICollectController {
             $this->_f3->set("email", $_POST["email"]);
             $this->_f3->set("accountType", $_POST["accountType"]);
 
-            $this->_user = new User();
+            $_SESSION["user"] = new User();
 
             if ($this->_f3->exists("errors['username']")) {
                 $this->_f3->clear("errors['username']");
@@ -75,13 +77,13 @@ class ICollectController {
                 $this->_f3->clear("errors['email']");
             }
 
-            if ($this->_cnxn) {
-                if (!$this->_validator->validLogin($_POST["username"]) OR $this->_cnxn->containsUsername($_POST["username"])) {
+            if ($this->_db) {
+                if (!$this->_validator->validLogin($_POST["username"]) OR $this->_db->containsUsername($_POST["username"])) {
                     $this->_f3->set("errors['username']", "Please choose another name.");
                     $isValid = false;
                 }
 
-                if (!$this->_validator->validEmail($_POST["email"]) OR $this->_cnxn->containsEmail($_POST["email"]) ) {
+                if (!$this->_validator->validEmail($_POST["email"]) OR $this->_db->containsEmail($_POST["email"]) ) {
                     $this->_f3->set("errors['email']", "Please choose another email.");
                     $isValid = false;
                 }
@@ -107,13 +109,12 @@ class ICollectController {
 
             //all inputs valid and user is added to the database, go to next page
             if ($isValid) {
-                $this->_user->setUsername($_POST["username"]);
-                $this->_user->setUserEmail($_POST["email"]);
-                $this->_user->setPremium($_POST["accountType"]);
-                $id = $this->_cnxn->addNewUser($this->_user, $_POST["password"]);
+                $_SESSION["user"]->setUsername($_POST["username"]);
+                $_SESSION["user"]->setUserEmail($_POST["email"]);
+                $_SESSION["user"]->setPremium($_POST["accountType"]);
+                $id = $this->_db->addNewUser($this->_user, $_POST["password"]);
                 if($id != null) {
-                    $this->_user->setUserID($id);
-                    $_SESSION["user"] = $this->_user;
+                    $_SESSION["user"]->setUserID($id);
                     $this->_f3->reroute('/success');
                 } else {
                     $this->_f3->set("errors['addNewUser']", "Something went wrong try again.");
@@ -137,6 +138,46 @@ class ICollectController {
 
     public function createCollection() {
         $_SESSION['page']="Create Collection";
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST["create"])) {
+                $this->_f3->set("name", $_POST["title"]);
+                $this->_f3->set("description", $_POST["description"]);
+
+                $isValid = true;
+
+                if (!$this->_validator->validCollectionName($_POST["title"])) {
+                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                    $isValid = false;
+                }
+
+                if (!$this->_validator->validCollectionDecription($_POST["description"])) {
+                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                    $isValid = false;
+                }
+
+                if ($isValid) {
+                    if (isset($_POST["add-attributes"])) {
+                        $_SESSION["collection"] =
+                            new PremiumCollection($_POST["title"], $_POST["description"], "1");
+                    } else {
+                        $_SESSION["collection"] =
+                            new Collection($_POST["title"], $_POST["description"], "0");
+                    }
+
+                    $_SESSION["collection"]->setCollectionID($this->_db->addCollection($_SESSION["collection"]));
+                    if ($_SESSION["collection"]->getCollectionID() === null) {
+                        //$this->_f3->reroute('/collection'); //new route and view not added
+                        $this->_f3->set("errors['addCollection']",
+                            "Sorry, there was an error adding collection to the database");
+                    } else {
+                        $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
+                    }
+                }
+            }
+        }
+
+
         $view = new Template();
         echo $view->render("views/create-collection.html");
     }

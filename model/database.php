@@ -107,6 +107,13 @@ class Database
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    function getCollection($collID) {
+        $sql = "SELECT * FROM `userCollections` WHERE collectionID ='$collID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
 
 

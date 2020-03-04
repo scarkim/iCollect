@@ -139,8 +139,7 @@ class ICollectController {
         $view = new Template();
         echo $view->render("views/welcome.html");
     }
-//1 CREATE COLLECTION ->>> COLLECTION VIEW ->>>>> \
-//FROM HOME VIEWS CLICK COLLECTION --> GO TO COLLECTION VIEW DEPENDING ON SESSION['COLLECTION'] VARIABLE
+
     public function createCollection() {
         $_SESSION['page']="Create Collection";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -179,13 +178,26 @@ class ICollectController {
                         $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
 //                            $_SESSION['collectionName'] = $_POST["title"];
                         $this->_f3->set("collection['name']", $_POST["title"] );
-                            $this->_f3->reroute('/addItem');
+                            $this->_f3->reroute('/collection/@item');
                     }
                  }
             }
         }
         $view = new Template();
         echo $view->render("views/create-collection.html");
+    }
+
+
+
+    public function showCollection($collID){
+        $collection = $this->_db->getCollection($collID);
+        if ($collection[0]["premium"] == "0") {
+            $_SESSION["collection"] = new Collection();
+        } else {
+            $_SESSION["collection"] = new PremiumCollection();
+        }
+        $view = new Template();
+        echo $view->render("views/collection-view.html");
     }
     public function addItem() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

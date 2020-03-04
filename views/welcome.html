@@ -18,8 +18,6 @@
     <a href="createcollection">Create a new collection</a>
 </div>
         <h3>Collections</h3>
-<!--    MAKE REPEAT GROUP OF COLLECTIONS -->
-<!--    repeat from userCollections where userID = users.userID?-->
     <div class="row mb-0">
         <repeat group="{{ @collectionsRepeat }}" value="{{ @collection }}">
                 <div class="card h-100" style="width: 14rem;">
@@ -27,7 +25,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ @collection['collectionName'] }}</h5>
                         <p class="card-text">{{ @collection['collectionDescription'] }}</p>
-                        <a class="btn" href="/whatever-route/{{ @collection['collectionID'] }}">View</a>
+                        <a href="collection/{{ @collection['collectionID'] }}">View Collection</a>
                     </div>
                 </div>
         </repeat>

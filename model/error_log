@@ -1,0 +1,36 @@
+[04-Mar-2020 01:55:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:55:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:55:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:55:10 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:55:10 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:55:10 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:56:07 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:56:09 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24
+[04-Mar-2020 01:56:15 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php:24
+Stack trace:
+#0 {main}
+  thrown in /home/skimgree/public_html/328/iCollect/model/ajax-username-check.php on line 24

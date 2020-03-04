@@ -109,12 +109,22 @@ class Database
         return $result;
     }
 
-    function addImage($userID, $image) {
+    function addImage($userID, $image)
+    {
         $sql = "UPDATE `users`
                 SET profileImage ='$image'
                 WHERE userID = '$userID'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
+    }
+
+    function getCollection($collID) {
+        $sql = "SELECT * FROM `userCollections` WHERE collectionID ='$collID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+
     }
 }
 

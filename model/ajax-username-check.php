@@ -1,7 +1,7 @@
 <?php
-define("DB_DSN", "mysql:dbname=rcoxgree_icollect");
-define("DB_USERNAME", "rcoxgree_grcuser");
-define("DB_PASSWORD", 'rcoxgree_grcuser');
+define("DB_DSN", "mysql:dbname=skimgree_icollect");
+define("DB_USERNAME", "skimgree_grcuser");
+define("DB_PASSWORD", "Password123!My");;
 
 try {
     $db = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);

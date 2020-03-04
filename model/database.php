@@ -99,6 +99,14 @@ class Database
             return null;
         }
     }
+
+    function getCollections($user_id) {
+        $sql = "SELECT * FROM `userCollections` WHERE userID ='$user_id'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
 
 

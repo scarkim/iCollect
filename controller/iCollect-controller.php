@@ -127,18 +127,22 @@ class ICollectController {
     }
 
     public function welcome() {
-        $_SESSION['page']="Welcome";
+
+
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
         }
 
+        $_SESSION['page']="Welcome";
+//        var_dump($this->_db->getCollections($_SESSION["user"]->getUserID()));
+        $this->_f3->set("collectionsRepeat", $this->_db->getCollections($_SESSION["user"]->getUserID()));
         $view = new Template();
         echo $view->render("views/welcome.html");
     }
-
+//1 CREATE COLLECTION ->>> COLLECTION VIEW ->>>>> \
+//FROM HOME VIEWS CLICK COLLECTION --> GO TO COLLECTION VIEW DEPENDING ON SESSION['COLLECTION'] VARIABLE
     public function createCollection() {
         $_SESSION['page']="Create Collection";
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST["create"])) {
                 $this->_f3->set("name", $_POST["title"]);
@@ -167,13 +171,17 @@ class ICollectController {
 
                     $_SESSION["collection"]->setCollectionID($this->_db->addCollection($_SESSION["collection"]));
                     if ($_SESSION["collection"]->getCollectionID() === null) {
+
                         //$this->_f3->reroute('/collection'); //new route and view not added
                         $this->_f3->set("errors['addCollection']",
                             "Sorry, there was an error adding collection to the database");
                     } else {
                         $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
+//                            $_SESSION['collectionName'] = $_POST["title"];
+                        $this->_f3->set("collection['name']", $_POST["title"] );
+                            $this->_f3->reroute('/addItem');
                     }
-                }
+                 }
             }
         }
         $view = new Template();

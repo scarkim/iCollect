@@ -178,7 +178,7 @@ class ICollectController {
                         $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
 //                            $_SESSION['collectionName'] = $_POST["title"];
                         $this->_f3->set("collection['name']", $_POST["title"] );
-                            $this->_f3->reroute('/collection/'.$_SESSION["collection"]->getCollectionID());
+                            $this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());
                     }
                  }
             }
@@ -191,11 +191,15 @@ class ICollectController {
 
     public function showCollection($collID){
         $collection = $this->_db->getCollection($collID);
-        if ($collection[0]["premium"] == "0") {
-            $_SESSION["collection"] = new Collection();
-        } else {
-            $_SESSION["collection"] = new PremiumCollection();
+        if ($collection) {
+            if ($collection["premium"] == "0") {
+                $_SESSION["collection"] = new Collection();
+            } else {
+                $_SESSION["collection"] = new PremiumCollection();
+            }
+
         }
+
         $view = new Template();
         echo $view->render("views/collection-view.html");
     }
@@ -209,6 +213,7 @@ class ICollectController {
 //            $this->_f3->set("image", $_POST["image"]); //adding later
             $this->_db->insertItem($_POST["name"], $_POST["description"], " ", 1);
         }
+
         $view = new Template();
         echo $view->render("views/add-item.html");
     }

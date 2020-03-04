@@ -122,7 +122,7 @@ class Database
         $sql = "SELECT * FROM `userCollections` WHERE collectionID ='$collID'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result;
 
     }

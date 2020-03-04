@@ -36,7 +36,7 @@ $iController->getF3()->route("GET|POST /createcollection", function (){
     $iController->createCollection();
 });
 
-$iController->getF3()->route("GET|POST  /collection/@item",
+$iController->getF3()->route("GET|POST /@item",
     function ($iController, $params){
     global $iController;
     $iController->showCollection($params["item"]);

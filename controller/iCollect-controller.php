@@ -178,7 +178,7 @@ class ICollectController {
                         $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
 //                            $_SESSION['collectionName'] = $_POST["title"];
                         $this->_f3->set("collection['name']", $_POST["title"] );
-                            $this->_f3->reroute('/collection/@item');
+                            $this->_f3->reroute('/collection/'.$_SESSION["collection"]->getCollectionID());
                     }
                  }
             }

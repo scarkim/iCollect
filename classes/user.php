@@ -7,6 +7,7 @@ class User
     //private $_password;
     private $_premium;
     private $_userEmail;
+    private $_profileImg;
 
     /**
      * User constructor.
@@ -22,6 +23,23 @@ class User
         $this->_premium = $premium;
         $this->_userEmail = $userEmail;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProfileImg()
+    {
+        return $this->_profileImg;
+    }
+
+    /**
+     * @param mixed $profileImg
+     */
+    public function setProfileImg($profileImg)
+    {
+        $this->_profileImg = $profileImg;
+    }
+
     /**
      * @return mixed
      */

@@ -4,7 +4,16 @@
 <div class="float-left">
     <h1>Welcome, {{ @SESSION['user']->getUsername() }}!</h1>
 <!--    <h3>User ID: {{ @SESSION['user']->getUserID() }}</h3>-->
-    <img  id = "default-profile" src = "images/default-profile.png">
+                    <check if="{{ @SESSION['user']->getProfileImg() !== null }}">
+                        <true>
+                            <img src="{{@SESSION['user']->getProfileImg()}}"
+                                 class="rounded profile-img"
+                                 alt="Profile image">
+                        </true>
+                        <false>
+                            <img  id = "default-profile" src = "images/default-profile.png">
+                        </false>
+                    </check>
     <br><br>
     <a href="createcollection">Create a new collection</a>
 </div>
@@ -18,7 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ @collection['collectionName'] }}</h5>
                         <p class="card-text">{{ @collection['collectionDescription'] }}</p>
-                        <button>View</button>
+                        <a class="btn" href="/whatever-route/{{ @collection['collectionID'] }}">View</a>
                     </div>
                 </div>
         </repeat>

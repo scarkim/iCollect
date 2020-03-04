@@ -6,4 +6,42 @@
 <p>{{ @SESSION["user"]->getUserEmail() }}</p>
 <p>{{ @SESSION["user"]->getPremium() }}</p>
 <a href="welcome">Continue</a>
+
+<div class="container-fluid p-5">
+            <div class="row p-3 border rounded">
+                <label for="upload-form">
+                    <h1>Choose a profile picture.</h1>
+                </label>
+                <check if="{{ @errors }}">
+                    <repeat group="{{ @errors }}" value="{{ @value }}">
+                        <span class="err">{{ @value }}</span>
+                    </repeat>
+                </check>
+                <hr>
+                <form class="col-12" action="#" method="post"
+                      enctype="multipart/form-data" id="upload-form">
+                    <div class="form-group">
+                        <label class="custom-file-label form-control"
+                               for="fileToUpload">
+                            Choose an image
+                        </label>
+                        <input class="custom-file-input form-control"
+                               type="file" name="fileToUpload"
+                               id="fileToUpload">
+                    </div>
+                    <div class="text-center">
+                        <input class="btn btn-primary" type="submit"
+                               value="Upload Image" name="submit">
+                        <input class="btn btn-success" type="submit"
+                               value="Skip" name="skip">
+                        <!--<a class="btn btn-success"
+                           href="profile-summary">Skip</a>-->
+                    </div>
+                </form>
+            </div>
+            <check if="{{ @errors['addUser'] }}">
+                <span class="err">{{ @errors['addUser'] }}</span>
+            </check>
+        </div>
+
 <include href="views/footer.html" />

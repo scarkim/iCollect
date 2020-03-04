@@ -35,12 +35,12 @@ $iController->getF3()->route("GET|POST /createcollection", function (){
     global $iController;
     $iController->createCollection();
 });
-$iController->getF3()->route("GET|POST /addItem", function (){
+$iController->getF3()->route("GET /addItem", function (){
     global $iController;
     $iController->addItem();
 });
 
-$iController->getF3()->route("GET /success", function (){
+$iController->getF3()->route("GET|POST /success", function (){
     global $iController;
     $iController->success();
 });

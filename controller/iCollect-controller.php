@@ -112,7 +112,7 @@ class ICollectController {
                 $_SESSION["user"]->setUsername($_POST["username"]);
                 $_SESSION["user"]->setUserEmail($_POST["email"]);
                 $_SESSION["user"]->setPremium($_POST["accountType"]);
-                $id = $this->_db->addNewUser($this->_user, $_POST["password"]);
+                $id = $this->_db->addNewUser($_SESSION["user"], $_POST["password"]);
                 if($id != null) {
                     $_SESSION["user"]->setUserID($id);
                     $this->_f3->reroute('/success');
@@ -206,6 +206,66 @@ class ICollectController {
 
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $target_dir = "uploads/";
+            $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+
+            $imageFileType = strtolower(pathinfo($target_file,
+                PATHINFO_EXTENSION));
+
+            // Check if image file is a actual image or fake image
+            if (isset($_POST["submit"]) AND
+                !empty($_FILES["fileToUpload"]["tmp_name"])) {
+
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                $uploadOk = true;
+
+                if($imageFileType != "jpg" && $imageFileType != "png" &&
+                    $imageFileType != "jpeg") {
+                    $this->_f3->set("errors['fileFormat']",
+                        "Sorry, only JPG, JPEG, PNG files are allowed.");
+                    $uploadOk = false;
+                } elseif ($check === false) {
+                    $this->_f3->set("errors['fileExists']",
+                        "Not recognized as an image.");
+                    $uploadOk = false;
+                }
+
+                if ($uploadOk) {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
+                        $target_file)) {
+
+                        $_SESSION["user"]->setProfileImg($target_file);
+
+                        $this->_f3->set("profileImage", $target_file);
+
+                        $this->_db->addImage($_SESSION["user"]->getUserID(), $target_file);
+                        $this->_f3->reroute('/welcome');
+                        /*$_SESSION["user"]->setId(
+                            $this->_db->insertMember($_SESSION["user"]));
+                        if ($_SESSION["user"]->getId() !== null) {
+                            //add in/outdoor interests into table
+                            $this->_db->insertMemberInterests($_SESSION["user"]);
+                            $_SESSION["user"]->setInterests(
+                                $this->_db->getInterests($_SESSION["user"]->getID()));
+                            $this->_f3->reroute('/profile-summary');
+
+                        }*/
+
+                    } else {
+                        $this->_f3->set("errors['fileUpload']",
+                            "Sorry, there was an error uploading your file.");
+                    }
+                }
+            } else {
+                $this->_f3->set("errors['fileExists']", "No file.");
+            }
+            //if skip was pressed
+            if (isset($_POST["skip"])) {
+                    $this->_f3->reroute('/welcome');
+            }
         }
 
         $view = new Template();

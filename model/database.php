@@ -82,6 +82,7 @@ class Database
         $user->setUsername($result["userName"]);
         $user->setUserEmail($result["userEmail"]);
         $user->setPremium($result["premium"]);
+        $user->setProfileImg($result["profileImage"]);
         return $user;
     }
 
@@ -106,6 +107,14 @@ class Database
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    function addImage($userID, $image) {
+        $sql = "UPDATE `users`
+                SET profileImage ='$image'
+                WHERE userID = '$userID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
     }
 }
 

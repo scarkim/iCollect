@@ -1,7 +1,7 @@
 <?php
 class Validate {
     //check if user is already in db
-    function validUserName($userName, $cnxn) {
+    function validUserName($userName) {
         return ctype_alnum($userName);
     }
 
@@ -26,12 +26,6 @@ class Validate {
         return $acctType === "0" OR $acctType === "1";
     }
 
-
-    function validItem($item) {
-
-
-    }
-
     function validCollectionName($name) {
 
         if (sizeof($name) > 50) return false;
@@ -52,5 +46,4 @@ class Validate {
          }
      return true;
  }
-
 }

@@ -20,6 +20,7 @@ class Database
             echo $e->getMessage();
         }
     }
+
     function checkCredentials($username, $password){
             $sql = "SELECT * FROM `users` WHERE userName='$username' AND
                 password='$password'";
@@ -29,6 +30,7 @@ class Database
             //do the steps from class skip binding params
             return $result;
     }
+
     function addNewUser($user, $password) {
         $username = $user->getUsername();
         $userEmail = $user->getUserEmail();
@@ -45,6 +47,7 @@ class Database
         //get the primary key of the last inserted row (in this case it is sid)
         //$id =
     }
+
     function containsEmail($email)
     {
         //1. define the query
@@ -57,6 +60,7 @@ class Database
         //do the steps from class skip binding params
         return $result;
     }
+
     function containsUsername($username){
         $sql = "SELECT * FROM `users` WHERE userName='$username'";
         //2. prepare the statement
@@ -79,17 +83,6 @@ class Database
         $user->setUserEmail($result["userEmail"]);
         $user->setPremium($result["premium"]);
         return $user;
-    }
-
-    function insertItem( $name, $description, $image, $collection_id ){
-        $sql = "INSERT INTO `collectionItems` (itemName, itemDescription, itemImage, collectionID) 
-            VALUES ('$name', '$description', '$image', '$collection_id')";
-   $statement = $this->_cnxn->prepare($sql);
-        if ($statement->execute()) {
-            return $this->_cnxn->lastInsertId();
-        } else {
-            return null;
-        }
     }
 
     function addCollection($collection) {

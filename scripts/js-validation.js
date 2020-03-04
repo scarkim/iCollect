@@ -89,8 +89,6 @@ if (document.title === "iCollect Signup" || document.title === "iCollect Login")
             return isValid;
         }
     }
-
-
 }
 
 

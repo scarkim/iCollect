@@ -6,6 +6,23 @@ class Collection
     private $_name;
     private $_description;
     private $_premium;
+    private $_collectionImage;
+
+    /**
+     * @return mixed
+     */
+    public function getCollectionImage()
+    {
+        return $this->_collectionImage;
+    }
+
+    /**
+     * @param mixed $collectionImage
+     */
+    public function setCollectionImage($collectionImage)
+    {
+        $this->_collectionImage = $collectionImage;
+    }
 
     /**
      * Collection constructor.

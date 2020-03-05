@@ -128,7 +128,6 @@ class ICollectController {
 
     public function welcome() {
 
-
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
         }
@@ -175,10 +174,11 @@ class ICollectController {
                         $this->_f3->set("errors['addCollection']",
                             "Sorry, there was an error adding collection to the database");
                     } else {
-                        $this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
-//                            $_SESSION['collectionName'] = $_POST["title"];
-                        $this->_f3->set("collection['name']", $_POST["title"] );
-                            $this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());
+                        //$this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
+                        //$this->_f3->set("collection['name']", $_POST["title"] );
+                        //change route to success for file upload
+                        /*$this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());*/
+                        $this->_f3->reroute('/success');
                     }
                  }
             }
@@ -187,9 +187,11 @@ class ICollectController {
         echo $view->render("views/create-collection.html");
     }
 
-
-
     public function showCollection($collID){
+        if ($collID === "index.php") {
+            $this->_f3->reroute('/');
+        }
+
         $collection = $this->_db->getCollection($collID);
         if ($collection) {
             if ($collection["premium"] == "0") {
@@ -210,7 +212,7 @@ class ICollectController {
             $this->_f3->set("id", ""); //change this to the auto incrementing id
             $this->_f3->set("name", $_POST["name"]);
             $this->_f3->set("description", $_POST["description"]);
-//            $this->_f3->set("image", $_POST["image"]); //adding later
+            //$this->_f3->set("image", $_POST["image"]); //adding later
             $this->_db->insertItem($_POST["name"], $_POST["description"], " ", 1);
         }
 
@@ -219,10 +221,15 @@ class ICollectController {
     }
 
     public function success() {
-        $_SESSION['page']="Sign Up Success";
 
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
+        }
+
+        if (isset($_SESSION["collection"])) {
+            $_SESSION['page']="Collection Image Upload";
+        } else {
+            $_SESSION['page']="Profile Image Upload";
         }
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -254,22 +261,16 @@ class ICollectController {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"],
                         $target_file)) {
 
+                        if ($_SESSION["page"] === "Collection Image Upload") {
+                            $_SESSION["collection"]->setCollectionImage($target_file);
+                            $this->_db->addCollectionImage($_SESSION["collection"]->getCollectionID(), $target_file);
+                            $this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());
+                        }
+
                         $_SESSION["user"]->setProfileImg($target_file);
-
-                        $this->_f3->set("profileImage", $target_file);
-
+                        //$this->_f3->set("profileImage", $target_file);
                         $this->_db->addImage($_SESSION["user"]->getUserID(), $target_file);
                         $this->_f3->reroute('/welcome');
-                        /*$_SESSION["user"]->setId(
-                            $this->_db->insertMember($_SESSION["user"]));
-                        if ($_SESSION["user"]->getId() !== null) {
-                            //add in/outdoor interests into table
-                            $this->_db->insertMemberInterests($_SESSION["user"]);
-                            $_SESSION["user"]->setInterests(
-                                $this->_db->getInterests($_SESSION["user"]->getID()));
-                            $this->_f3->reroute('/profile-summary');
-
-                        }*/
 
                     } else {
                         $this->_f3->set("errors['fileUpload']",

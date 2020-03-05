@@ -21,7 +21,16 @@
     <div class="row mb-0">
         <repeat group="{{ @collectionsRepeat }}" value="{{ @collection }}">
                 <div class="card h-100" style="width: 14rem;">
-                    <img class="card-img-top" height="130" src="images/sample-pic1.jpg" alt="Card image cap">
+                    <check if="{{ @collection['collectionImage'] !== null }}">
+                        <true>
+                            <img class="card-img-top" height="130"
+                                 src="{{ @collection['collectionImage'] }}" alt="Card image cap">
+                        </true>
+                        <false>
+                            <img class="card-img-top" height="130"
+                                 src="images/sample-pic1.jpg" alt="Card image cap">
+                        </false>
+                    </check>
                     <div class="card-body">
                         <h5 class="card-title">{{ @collection['collectionName'] }}</h5>
                         <p class="card-text">{{ @collection['collectionDescription'] }}</p>

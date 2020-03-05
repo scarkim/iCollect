@@ -118,6 +118,15 @@ class Database
         $statement->execute();
     }
 
+    function addCollectionImage($collectionID, $image)
+    {
+        $sql = "UPDATE `userCollections`
+                SET collectionImage ='$image'
+                WHERE collectionID = '$collectionID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+    }
+
     function getCollection($collID) {
         $sql = "SELECT * FROM `userCollections` WHERE collectionID ='$collID'";
         $statement = $this->_cnxn->prepare($sql);

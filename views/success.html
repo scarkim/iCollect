@@ -1,16 +1,20 @@
 <include href="views/header.html" />
 <include href="views/site-nav.html"></include>
-<h1>Success!</h1>
+<!--<h1>Success!</h1>
 <p>{{ @SESSION["user"]->getUserID() }}</p>
 <p>{{ @SESSION["user"]->getUsername() }}</p>
 <p>{{ @SESSION["user"]->getUserEmail() }}</p>
 <p>{{ @SESSION["user"]->getPremium() }}</p>
-<a href="welcome">Continue</a>
+<a href="welcome">Continue</a>-->
 
 <div class="container-fluid p-5">
             <div class="row p-3 border rounded">
                 <label for="upload-form">
-                    <h1>Choose a profile picture.</h1>
+                    <check if="{{ @SESSION['collection'] }}">
+                        <true><h1>Choose a collection picture.</h1></true>
+                        <false><h1>Choose a profile picture.</h1></false>
+                    </check>
+
                 </label>
                 <check if="{{ @errors }}">
                     <repeat group="{{ @errors }}" value="{{ @value }}">

@@ -1,10 +1,8 @@
 <include href="views/header.html" />
 <include href="views/site-nav.html"></include>
 <div class = "container">
-<!--    <div class="float-left">-->
-<!--        <h1>{{ @SESSION['collection']->getCollectionName() }}!</h1>-->
 
     <p>{{ @SESSION['collection']->getCollectionID() }}</p>
-
+    <p>{{ @SESSION['collection']->getName() }}</p>
 </div>
 <include href="views/footer.html" />

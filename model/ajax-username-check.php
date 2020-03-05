@@ -1,8 +1,5 @@
 <?php
-define("DB_DSN", "mysql:dbname=skimgree_icollect");
-define("DB_USERNAME", "skimgree_grcuser");
-define("DB_PASSWORD", "Password123!My");;
-
+require ("../../../../connection.php");
 try {
     $db = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
 
@@ -15,14 +12,10 @@ if(isset($_POST["username"])) {
     $username = $_POST["username"];
     $title = $_POST["title"];
 
-    //$validator = new Validate();
-
     if(ctype_alnum($username)) {
 
         $sql = "SELECT * FROM `users` WHERE userName='$username'";
-        //2. prepare the statement
         $statement = $db->prepare($sql);
-        //execute statement
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -46,15 +39,10 @@ if(isset($_POST["username"])) {
     $email = $_POST["email"];
     $title = $_POST["title"];
 
-    //$validator = new Validate();
-
     if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-
         $sql = "SELECT * FROM `users` WHERE userEmail='$email'";
-        //2. prepare the statement
         $statement = $db->prepare($sql);
-        //execute statement
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 

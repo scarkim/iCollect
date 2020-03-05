@@ -199,9 +199,11 @@ class ICollectController {
             } else {
                 $_SESSION["collection"] = new PremiumCollection();
             }
-
+            $_SESSION["collection"]->setName($collection["collectionName"]);
+            $_SESSION["collection"]->setDescription($collection["collectionDescription"]);
+            $_SESSION["collection"]->setPremium($collection["premium"]);
+            $_SESSION["collection"]->setCollectionID($collection["collectionID"]);
         }
-
         $view = new Template();
         echo $view->render("views/collection-view.html");
     }

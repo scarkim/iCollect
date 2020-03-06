@@ -180,7 +180,7 @@ class ICollectController {
                         /*$this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());*/
                         $this->_f3->reroute('/success');
                     }
-                 }
+                }
             }
         }
         $view = new Template();
@@ -203,11 +203,13 @@ class ICollectController {
             $_SESSION["collection"]->setDescription($collection["collectionDescription"]);
             $_SESSION["collection"]->setPremium($collection["premium"]);
             $_SESSION["collection"]->setCollectionID($collection["collectionID"]);
+            $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems($_SESSION["collection"]->getCollectionID()));
+
         }
         $view = new Template();
         echo $view->render("views/collection-view.html");
     }
-    public function addItem() {
+    public function addItem($collID) {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
             $_SESSION['page'] = "Add an item to your collection";
@@ -215,7 +217,7 @@ class ICollectController {
             $this->_f3->set("name", $_POST["name"]);
             $this->_f3->set("description", $_POST["description"]);
             //$this->_f3->set("image", $_POST["image"]); //adding later
-            $this->_db->insertItem($_POST["name"], $_POST["description"], " ", 1);
+            $this->_db->insertItem($_POST["name"], $_POST["description"], " ", $collID);
         }
 
         $view = new Template();
@@ -284,7 +286,7 @@ class ICollectController {
             }
             //if skip was pressed
             if (isset($_POST["skip"])) {
-                    $this->_f3->reroute('/welcome');
+                $this->_f3->reroute('/welcome');
             }
         }
 
@@ -294,6 +296,7 @@ class ICollectController {
 
     public function logout() {
         unset($_SESSION["user"]);
+        unset($_SESSION["collection"]);
         $this->_f3->reroute('/');
     }
 

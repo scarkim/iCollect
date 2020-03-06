@@ -38,14 +38,14 @@ $iController->getF3()->route("GET|POST /createcollection", function (){
 
 $iController->getF3()->route("GET|POST /@item",
     function ($iController, $params){
-    global $iController;
-    $iController->showCollection($params["item"]);
+        global $iController;
+        $iController->showCollection($params["item"]);
 });
 
-
-$iController->getF3()->route("GET|POST /addItem", function (){
-    global $iController;
-    $iController->addItem();
+$iController->getF3()->route("GET|POST /addItem",
+    function ($iController, $params){
+        global $iController;
+        $iController->addItem($params["item"]);
 });
 
 $iController->getF3()->route("GET|POST /success", function (){
@@ -58,5 +58,5 @@ $iController->getF3()->route("GET|POST /logout", function (){
     $iController->logout();
 });
 
-//Run Fat-Free
+//Run Fat-Frees
 $iController->getF3()->run();

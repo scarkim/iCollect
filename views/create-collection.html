@@ -6,6 +6,7 @@
 
         <div class="form-group form-inline positioner input-effect">
             <label for = "title">Title: </label>
+            <span class="err" id="collectionTitleErr"></span>
             <check if="{{ @errors['invalidCollectionName'] }}">
                 <span class="err"> {{ @errors['invalidCollectionName'] }}</span>
             </check>
@@ -15,6 +16,7 @@
         </div>
         <div class="form-group ">
             <label class="col-form-label text-left" for="description">Description: </label>
+            <span class="err" id="collectionDescriptionErr"></span>
             <check if="{{ @errors['invalidCollectionDescription'] }}">
                 <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
             </check>

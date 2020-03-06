@@ -28,22 +28,16 @@ class Validate {
 
     function validCollectionName($name) {
 
+        if (sizeof($name) === "") return false;
         if (sizeof($name) > 50) return false;
-        $array = str_split($name);
-        foreach ($array AS $char)
-        if(!ctype_alnum($char) AND !ctype_space($char)) {
-            return false;
-        }
+        if (!preg_match("/^[^<>#@$%^*|]+$/", $name)) return false;
         return true;
     }
 
- function validCollectionDecription($description) {
+ function validCollectionDescription($description) {
+     if (sizeof($description) === "" OR $description == null) return true;
      if (sizeof($description) > 200) return false;
-     $array = str_split($description);
-     foreach ($array AS $char)
-         if(!ctype_alnum($char) AND !ctype_space($char)) {
-             return false;
-         }
+     if (!preg_match("/^[^<>#@$%^*|]+$/", $description)) return false;
      return true;
  }
 }

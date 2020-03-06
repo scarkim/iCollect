@@ -94,20 +94,37 @@ if (document.title === "iCollect Signup" ||
         }
     } else if (document.title === "Create Collection") {
 
-        form[0].onsubmit = validateCollection();
+        form[0].onsubmit = validateCollection;
+
+        let collectionTitleErr = document.getElementById("collectionTitleErr");
+        let collectionDescriptionErr = document.getElementById("collectionDescriptionErr");
 
         function validateCollection() {
 
             let collectionTitle = document.getElementById("title").value;
             let collectionDescription = document.getElementById("description").value;
-            let collectionTitleErr = document.getElementById("collectionTitleErr");
-            let collectionDescriptionErr = document.getElementById("collectionDescriptionErr");
+
             collectionTitleErr.innerText = "";
             collectionDescriptionErr.innerText = "";
+
             let isValid = true;
 
-            if (collectionTitle.length > 50) {
-                collectionTitleErr.innerText = "too long, must be less than 50";
+            if (collectionTitle === "") {
+                collectionTitleErr.innerText = "Must have a title";
+                isValid = false;
+            } else if (collectionTitle.length > 50){
+                collectionTitleErr.innerText = "Must be less than 50";
+                isValid = false;
+            } else if (!collectionTitle.match(/^[^<>#@$%^*|]+$/)){
+                collectionTitleErr.innerText = "No special characters";
+                isValid = false;
+            }
+
+            if (collectionDescription.length > 200){
+                collectionDescriptionErr.innerText = "Must be less than 200";
+                isValid = false;
+            } else if (!collectionDescription.match(/^[^<>#@$%^*|]+$/)){
+                collectionDescriptionErr.innerText = "No special characters";
                 isValid = false;
             }
 

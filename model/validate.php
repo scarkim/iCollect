@@ -37,7 +37,7 @@ class Validate {
         return true;
     }
 
- function validCollectionDecription($description) {
+ function validCollectionDescription($description) {
      if (sizeof($description) > 200) return false;
      $array = str_split($description);
      foreach ($array AS $char)

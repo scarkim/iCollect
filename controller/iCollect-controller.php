@@ -188,10 +188,31 @@ class ICollectController {
     }
 
     public function showCollection($collID){
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //get post values, call db function
+                $isValid = true;
+                if (!$this->_validator->validCollectionName($_POST["name"])) {
+                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                    $isValid = false;
+                }
+
+                if(!$this->_validator->validCollectionDescription($_POST["description"])){
+                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                    $isValid = false;
+                }
+                if($isValid) {
+                        $this->_f3->set("name", $_POST["name"]);
+                        $this->_f3->set("description", $_POST["description"]);
+                        //$this->_f3->set("image", $_POST["image"]); //adding later
+                        $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
+                    }
+                else {
+                    //keep modal open
+                }
+                }
         if ($collID === "index.php") {
             $this->_f3->reroute('/');
         }
-
         $collection = $this->_db->getCollection($collID);
         if ($collection) {
             if ($collection["premium"] == "0") {
@@ -204,25 +225,24 @@ class ICollectController {
             $_SESSION["collection"]->setPremium($collection["premium"]);
             $_SESSION["collection"]->setCollectionID($collection["collectionID"]);
             $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems($_SESSION["collection"]->getCollectionID()));
-
         }
         $view = new Template();
         echo $view->render("views/collection-view.html");
     }
-    public function addItem($collID) {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $isValid = true;
-            $_SESSION['page'] = "Add an item to your collection";
-            $this->_f3->set("id", ""); //change this to the auto incrementing id
-            $this->_f3->set("name", $_POST["name"]);
-            $this->_f3->set("description", $_POST["description"]);
-            //$this->_f3->set("image", $_POST["image"]); //adding later
-            $this->_db->insertItem($_POST["name"], $_POST["description"], " ", $collID);
-        }
-
-        $view = new Template();
-        echo $view->render("views/add-item.html");
-    }
+//    public function addItem($collID) {
+//        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//            $isValid = true;
+//            $_SESSION['page'] = "Add an item to your collection";
+//            $this->_f3->set("id", ""); //change this to the auto incrementing id
+//            $this->_f3->set("name", $_POST["name"]);
+//            $this->_f3->set("description", $_POST["description"]);
+//            //$this->_f3->set("image", $_POST["image"]); //adding later
+//            $this->_db->insertItem($_POST["name"], $_POST["description"], " ", $collID);
+//        }
+//
+//        $view = new Template();
+//        echo $view->render("views/add-item.html");
+//    }
 
     public function success() {
 

@@ -71,7 +71,7 @@ if (document.title === "iCollect Signup" || document.title === "iCollect Login")
             errUserName.style.visibility = "hidden";
             errPassword.style.visibility = "hidden";
 
-            let username = document.getElementById("username").value;
+            let username = document.getElementById("loginName").value;
             let password = document.getElementById("password").value;
 
             let isValid = true;

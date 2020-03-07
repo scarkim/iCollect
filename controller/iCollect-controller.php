@@ -143,41 +143,35 @@ class ICollectController {
         $_SESSION['page']="Create Collection";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST["create"])) {
-                $this->_f3->set("name", $_POST["title"]);
-                $this->_f3->set("description", $_POST["description"]);
+                $this->_f3->set("name", trim($_POST["title"]));
+                $this->_f3->set("description", trim($_POST["description"]));
 
                 $isValid = true;
 
-                if (!$this->_validator->validCollectionName($_POST["title"])) {
-                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                if (!$this->_validator->validCollectionName(trim($_POST["title"]))) {
+                    $this->_f3->set("errors['invalidCollectionName']", "No special characters, not empty and less than 50.");
                     $isValid = false;
                 }
 
-                if (!$this->_validator->validCollectionDecription($_POST["description"])) {
-                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                if (!$this->_validator->validCollectionDescription(trim($_POST["description"]))) {
+                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation and less than 200.");
                     $isValid = false;
                 }
 
                 if ($isValid) {
                     if (isset($_POST["add-attributes"])) {
                         $_SESSION["collection"] =
-                            new PremiumCollection($_POST["title"], $_POST["description"], "1");
+                            new PremiumCollection(trim($_POST["title"]), trim($_POST["description"]), "1");
                     } else {
                         $_SESSION["collection"] =
-                            new Collection($_POST["title"], $_POST["description"], "0");
+                            new Collection(trim($_POST["title"]), trim($_POST["description"]), "0");
                     }
 
                     $_SESSION["collection"]->setCollectionID($this->_db->addCollection($_SESSION["collection"]));
                     if ($_SESSION["collection"]->getCollectionID() === null) {
-
-                        //$this->_f3->reroute('/collection'); //new route and view not added
                         $this->_f3->set("errors['addCollection']",
                             "Sorry, there was an error adding collection to the database");
                     } else {
-                        //$this->_f3->set("errors['addCollection']", "Success! CollID:".$_SESSION["collection"]->getCollectionID());
-                        //$this->_f3->set("collection['name']", $_POST["title"] );
-                        //change route to success for file upload
-                        /*$this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());*/
                         $this->_f3->reroute('/success');
                     }
                 }

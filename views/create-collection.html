@@ -6,21 +6,29 @@
 
         <div class="form-group form-inline positioner input-effect">
             <label for = "title">Title: </label>
+            <span class="err" id="collectionTitleErr"></span>
             <check if="{{ @errors['invalidCollectionName'] }}">
-                <span class="err"> {{ @errors['invalidCollectionName'] }}</span>
+                <span class="err">{{ @errors['invalidCollectionName'] }}</span>
             </check>
             <input id = "title" class="effect-1" type="text"
-                   placeholder="Title" name="title">
+                   <check if="{{ @name !== '' }}">
+                        <true>
+                            value="{{ @name }}"
+                        </true>
+                      <false>
+                          placeholder="Max 50 characters."
+                      </false>
+                  </check> name="title">
             <span class="focus-border"></span>
         </div>
-        <div class="form-group ">
-            <label class="col-form-label text-left" for="description">Description: </label>
+        <div class="form-group positioner input-effect">
+            <label class="text-left" for="description">Description:
+            <span class="err" id="collectionDescriptionErr"></span>
             <check if="{{ @errors['invalidCollectionDescription'] }}">
                 <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
             </check>
             <textarea class="form-control" id = "description" name="description"
-                          rows="5" placeholder="Max 200 characters."></textarea>
-
+                      rows="5" cols="100" placeholder="Max 200 characters."></textarea></label>
         </div>
         <check if="{{ @SESSION['user']->getPremium() === '1' }}">
             <div class="form-check" id="attribute-check">
@@ -35,7 +43,7 @@
         <hr>
         <div class="form-group">
             <!--<button type="submit" class="btn btn-success" name="add">Add Attributes</button>-->
-            <button type="submit" class="btn btn-primary" name="create">Create Collection</button>
+            <input type="submit" class="btn btn-primary" name="create" value="Create Collection">
         </div>
     </form>
     <check if="{{ @errors['addCollection'] }}">

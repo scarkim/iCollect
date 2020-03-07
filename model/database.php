@@ -66,8 +66,8 @@ class Database
      * @return string|null
      */
     function insertItem($name, $description, $collID){
-        $sql = "INSERT INTO `collectionItems` (itemID, itemName itemDescription, image, collectionID)
-           VALUES (default, '$name', '$description', '',$collID )";
+        $sql = "INSERT INTO `collectionItems`  (itemName, itemDescription, collectionID)
+           VALUES ('$name', '$description', $collID )";
         $statement = $this->_cnxn->prepare($sql);
         if ($statement->execute()) {
             return $this->_cnxn->lastInsertId();

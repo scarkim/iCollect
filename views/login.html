@@ -4,7 +4,7 @@
     <form action="#" id="new-user-form" method="post">
         <h1>Login</h1>
         <div class="positioner input-effect form-inline">
-            <label for="username">Username :
+            <label for="loginName">Username :
                 <span id="ajax-name-result" class="err"></span>
                 <span class="err" id="err-username">*invalid username</span>
             </label>
@@ -12,7 +12,7 @@
                 <span class="err">{{ @errors['validLogin'] }}</span>
             </check>
             <input class="effect-1" type="text" placeholder="Username"
-                   name="username" id="username">
+                   name="username" id="loginName">
             <span class="focus-border"></span>
         </div>
 

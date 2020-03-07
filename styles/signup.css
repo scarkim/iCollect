@@ -155,4 +155,11 @@ input[type="password"]{
 }
 
 
+.modal-full {
+    min-width: 20%;
+    margin: auto;
+}
 
+.modal-full .modal-content {
+    min-height: 100vh;
+}

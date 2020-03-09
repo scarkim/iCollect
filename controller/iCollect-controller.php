@@ -183,23 +183,24 @@ class ICollectController {
 
     public function showCollection($collID){
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //get post values, call db function
-//                $isValid = true;
-//                if (!$this->_validator->validCollectionName($_POST["name"])) {
-//                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
-//                    $isValid = false;
-//                }
-//
-//                if(!$this->_validator->validCollectionDescription($_POST["description"])){
-//                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
-//                    $isValid = false;
-//                }
-//                if($isValid) {
-                        $this->_f3->set("name", $_POST["name"]);
-                        $this->_f3->set("description", $_POST["description"]);
-                        //$this->_f3->set("image", $_POST["image"]); //adding later
-                        $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
-//                    }
+
+//            get post values, call db function
+            $isValid = true;
+            if (!$this->_validator->validCollectionName($_POST["name"])) {
+                $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                $isValid = false;
+            }
+
+            if(!$this->_validator->validCollectionDescription($_POST["description"])){
+                $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                $isValid = false;
+            }
+            if($isValid) {
+                $this->_f3->set("name", $_POST["name"]);
+                $this->_f3->set("description", $_POST["description"]);
+                //$this->_f3->set("image", $_POST["image"]); //adding later
+                $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
+            }
 
         }
 

@@ -70,8 +70,14 @@
                 if ($.trim(itemName) === "") {
                     event.preventDefault();
                     event.stopPropagation();
-                    document.getElementById("err-name").innerText= "Please enter an item name";
+                    document.getElementById("err-name").innerText= "Item name required.";
                 }
+                 else if (!itemName.match(/^[^<>#@$%^*|]+$/)) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        document.getElementById("err-name").innerText= "No special characters allowed";
+                    }
+
                 else {
                     form.classList.add('was-validated');
                 }

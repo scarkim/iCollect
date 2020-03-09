@@ -21,51 +21,67 @@
             </repeat>
         </tbody>
     </table>
-    <a href="#myModal" role="button"  data-toggle="modal">Add an item</a>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-full" role="document">
+    <!-- Button trigger modal -->
+
+    <button type="button" class="btn-secondary" data-toggle="modal" data-target="#myModal">
+        Add an item
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add an Item</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X</span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body p-4" id="result">
-
-                    <div class="row">
-                        <div class = "container">
-                            <form action="#" id="collection-form" method="post">
-                                <h1 align="center">{{ @collection['name'] }}</h1>
-                                <h3>Add an item</h3>
-                                <div class="form-group form-inline positioner input-effect">
-                                    <label for = "name">Item Name: </label>
-                                    <check if="{{ @errors['invalidCollectionName'] }}">
-                                        <span class="err"> {{ @errors['invalidCollectionName'] }}</span>
-                                    </check>
-                                    <input id = "name" class="effect-1" type="text"
-                                           placeholder="Item Name" name="name">
-                                    <span class="focus-border"></span>
-                                </div>
-                                <div class="form-group form-inline">
-
-                                    <label for="description">Item Description: &nbsp;</label>
-                                    <check if="{{ @errors['invalidCollectionDescription'] }}">
-                                        <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
-                                    </check>
-                                    <textarea id = "description" name="description"
-                                              rows="5" cols="55"></textarea>
-                                </div>
-                                <div class="form-group">
-<!--                                    data-dismiss="modal"-->
-                                    <button type="submit">Add Item</button>
-                                </div>
-                            </form>
-                        <!-- get name input and description, and ocllectionID, sent to DB function  -->
+                <div class="modal-body">
+                    <form class="needs-validation" novalidate method="post" >
+                        <div class="form-group">
+                            <label for = "name">Item Name: </label>
+                            <input type="text" 	 name="name" class="form-control" id="name"  placeholder="Item name" required>
+                            <p id="err-name" class = "err">
+                            </p>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="description">Item Description: &nbsp;</label>
+                            <textarea id = "description" name="description" rows="5" cols="55"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Submit</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id = "close" class="btn btn-secondary">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+            let forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            let validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                let itemName = document.getElementById("name").value;
+                if ($.trim(itemName) === "") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    document.getElementById("err-name").innerText= "Please enter an item name";
+                }
+                else {
+                    form.classList.add('was-validated');
+                }
+            });
+            });
+            document.getElementById("close").addEventListener("click", function() {
+                document.getElementById("err-name").innerText="";
+                $('#myModal').modal('hide');
+            });
+
+
+</script>
 <include href="views/footer.html" />

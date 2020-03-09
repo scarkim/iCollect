@@ -8,6 +8,7 @@ html, body {
 
 }
 
+
 form {
     display: inline-block;
 }
@@ -124,6 +125,7 @@ input[type="password"]{
     animation-iteration-count: infinite;
     /*background-color: white;*/
 }
+
 .item-1{
     animation-name: anim-1;
 }

@@ -35,7 +35,6 @@ class Validate {
     }
 
  function validCollectionDescription($description) {
-
      if (sizeof($description) === "" OR $description == null) return true;
      if (sizeof($description) > 200) return false;
      if (!preg_match("/^[^<>#@$%^*|]+$/", $description)) return false;

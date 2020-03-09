@@ -199,11 +199,8 @@ class ICollectController {
                         $this->_f3->set("description", $_POST["description"]);
                         //$this->_f3->set("image", $_POST["image"]); //adding later
                         $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
-                    }
-                else {
-                    //keep modal open
                 }
-                }
+        }
         if ($collID === "index.php") {
             $this->_f3->reroute('/');
         }

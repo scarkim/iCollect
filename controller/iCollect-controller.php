@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
 
 class ICollectController {
     private $_f3;
@@ -133,7 +133,6 @@ class ICollectController {
         }
 
         $_SESSION['page']="Welcome";
-//        var_dump($this->_db->getCollections($_SESSION["user"]->getUserID()));
         $this->_f3->set("collectionsRepeat", $this->_db->getCollections($_SESSION["user"]->getUserID()));
         $view = new Template();
         echo $view->render("views/welcome.html");
@@ -182,10 +181,15 @@ class ICollectController {
     }
 
     public function showCollection($collID){
+
+        if ($collID === "index.php") {
+            $this->_f3->reroute('/');
+        }
+
         $this->_f3->set("db", $this->_db);
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-//            get post values, call db function
+            //get post values, call db function
             $isValid = true;
 
             if (isset($_POST["add-item"])) {
@@ -215,7 +219,7 @@ class ICollectController {
                 }
             } elseif (isset($_POST["add-attr"])) {
 
-                //add validation
+                //add validation of attribute values
                 /**/
 
                 if ($isValid) {
@@ -227,11 +231,6 @@ class ICollectController {
                     //add else error
                 }
             }
-
-        }
-
-        if ($collID === "index.php") {
-            $this->_f3->reroute('/');
         }
 
         $collection = $this->_db->getCollection($collID);
@@ -251,6 +250,7 @@ class ICollectController {
 
             $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems($_SESSION["collection"]->getCollectionID()));
         }
+
         $view = new Template();
         echo $view->render("views/collection-view.html");
     }

@@ -249,6 +249,3 @@ class Database
         return $result["itemValue"];
     }
 }
-
-
-

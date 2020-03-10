@@ -182,24 +182,50 @@ class ICollectController {
     }
 
     public function showCollection($collID){
+        $this->_f3->set("db", $this->_db);
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //            get post values, call db function
             $isValid = true;
-            if (!$this->_validator->validCollectionName($_POST["name"])) {
-                $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
-                $isValid = false;
-            }
 
-            if(!$this->_validator->validCollectionDescription($_POST["description"])){
-                $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
-                $isValid = false;
-            }
-            if($isValid) {
-                $this->_f3->set("name", $_POST["name"]);
-                $this->_f3->set("description", $_POST["description"]);
-                //$this->_f3->set("image", $_POST["image"]); //adding later
-                $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
+            if (isset($_POST["add-item"])) {
+
+                if (!$this->_validator->validCollectionName($_POST["name"])) {
+                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                    $isValid = false;
+                }
+
+                if(!$this->_validator->validCollectionDescription($_POST["description"])){
+                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                    $isValid = false;
+                }
+
+                if($isValid) {
+                    $this->_f3->set("name", $_POST["name"]);
+                    $this->_f3->set("description", $_POST["description"]);
+                    //$this->_f3->set("image", $_POST["image"]); //adding later
+                    $itemID = $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
+
+                    if (isset($_POST["itemAttrVal"])) {
+                        foreach ($_POST["itemAttrVal"] AS $attrID => $itemValue) {
+                            $this->_db->addItemAttributeValue($itemID, $attrID, $itemValue);
+                        }
+                    }
+
+                }
+            } elseif (isset($_POST["add-attr"])) {
+
+                //add validation
+                /**/
+
+                if ($isValid) {
+                    $newAttrID = $this->_db->insertAttribute($collID, $_POST["name"]);
+                    if ($newAttrID) {
+                        $_SESSION["collection"]->addAttribute($newAttrID, $_POST["name"]);
+                        $this->_f3->set("errors['invalidAttributeName']", "attribute ".$newAttrID." added.");
+                    }
+                    //add else error
+                }
             }
 
         }
@@ -207,6 +233,7 @@ class ICollectController {
         if ($collID === "index.php") {
             $this->_f3->reroute('/');
         }
+
         $collection = $this->_db->getCollection($collID);
         if ($collection) {
             if ($collection["premium"] == "0") {
@@ -218,6 +245,10 @@ class ICollectController {
             $_SESSION["collection"]->setDescription($collection["collectionDescription"]);
             $_SESSION["collection"]->setPremium($collection["premium"]);
             $_SESSION["collection"]->setCollectionID($collection["collectionID"]);
+            if (is_a($_SESSION["collection"], "PremiumCollection")) {
+                $_SESSION["collection"]->setAttributes($this->_db->getAttributes($collID));
+            }
+
             $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems($_SESSION["collection"]->getCollectionID()));
         }
         $view = new Template();

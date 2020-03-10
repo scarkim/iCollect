@@ -206,6 +206,48 @@ class Database
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+    function insertAttribute($collID, $attrName) {
+        $sql = "INSERT INTO `collectionAttributes` (collectionID, attributeName) 
+            VALUES ('$collID', '$attrName')";
+        $statement = $this->_cnxn->prepare($sql);
+        if ($statement->execute()) {
+            return $this->_cnxn->lastInsertId();
+        } else {
+            return null;
+        }
+    }
+
+    function getAttributes($collID) {
+        $sql = "SELECT * FROM `collectionAttributes` WHERE collectionID ='$collID'
+                ORDER BY attributeID ASC";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $returnArray = array();
+        foreach ($result AS $attr) {
+            $returnArray[$attr["attributeID"]] = $attr["attributeName"];
+        }
+        //return an array of id's not result
+        return $returnArray;
+    }
+
+    function addItemAttributeValue($itemID, $attrID, $itemValue) {
+        $sql = "INSERT INTO `itemAttributeValue` (itemID, attributeID, itemValue) 
+            VALUES ('$itemID', '$attrID', '$itemValue')";
+        $statement = $this->_cnxn->prepare($sql);
+        $result = $statement->execute();
+        return $result;
+    }
+
+    function getItemAttrValue($attrID, $itemID) {
+        $sql = "SELECT itemValue From `itemAttributeValue` 
+                WHERE attributeID = '$attrID' AND itemID = '$itemID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result["itemValue"];
+    }
 }
 
 

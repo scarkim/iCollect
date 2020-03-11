@@ -8,8 +8,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
+<check if="{{ @SESSION.page === 'iCollect Signup' }}">
     <script src="scripts/iCollect-ajax.js"></script>
+</check>
 <script src="scripts/js-validation.js"></script>
 <check if="{{ @SESSION.page === 'Collection Image Upload' || @SESSION.page === 'Profile Image Upload' }}">
     <script src="scripts/filename-extractor.js"></script>

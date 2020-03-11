@@ -10,7 +10,6 @@ try {
 if(isset($_POST["username"])) {
 
     $username = $_POST["username"];
-    $title = $_POST["title"];
 
     if(ctype_alnum($username)) {
 
@@ -20,24 +19,15 @@ if(isset($_POST["username"])) {
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            if ($title === "iCollect Signup") {
-                echo "Username taken";
-            } else {
-                echo "Username exists";
-            }
+            echo "Username taken";
         } else {
-            if ($title === "iCollect Signup") {
-                echo "Username available";
-            } else {
-                echo "Username doesn't exist";
-            }
+            echo "Username available";
         }
     } else {
         echo "alpha-numeric only ";
     }
 } elseif (isset($_POST["email"])) {
     $email = $_POST["email"];
-    $title = $_POST["title"];
 
     if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
 

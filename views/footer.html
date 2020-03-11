@@ -15,5 +15,9 @@
 <check if="{{ @SESSION.page === 'Collection Image Upload' || @SESSION.page === 'Profile Image Upload' }}">
     <script src="scripts/filename-extractor.js"></script>
 </check>
+<check if="{{ @SESSION.page === 'Collection' }}">
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+    <script src="scripts/table-row-clicker.js"></script>
+</check>
 </body>
 </html>

@@ -185,6 +185,7 @@ class ICollectController {
         if ($collID === "index.php") {
             $this->_f3->reroute('/');
         }
+        $_SESSION['page']="Collection";
 
         $this->_f3->set("db", $this->_db);
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -230,7 +231,9 @@ class ICollectController {
                     }
                     //add else error
                 }
-            }
+            } /*elseif (isset($_POST["editValue"])) {
+                echo "itemID: ".$_POST["itemID"].", oldValue: ".$_POST["oldValue"];
+            }*/
         }
 
         $collection = $this->_db->getCollection($collID);
@@ -329,6 +332,47 @@ class ICollectController {
         unset($_SESSION["user"]);
         unset($_SESSION["collection"]);
         $this->_f3->reroute('/');
+    }
+
+    public function signupAjax() {
+        if(isset($_POST["username"])) {
+
+            $username = $_POST["username"];
+
+            if($this->_validator->validUserName($username)) {
+
+                if ($this->_db->containsUsername($username)) {
+                    echo "Username taken";
+                } else {
+                    echo "Username available";
+                }
+            } else {
+                echo "alpha-numeric only ";
+            }
+        } elseif (isset($_POST["email"])) {
+            $email = $_POST["email"];
+
+            if($this->_validator->validEmail($email)) {
+
+                if ($this->_db->containsEmail($email)) {
+                    echo "Email taken";
+                } else {
+                    echo "Email available";
+                }
+            } else {
+                echo "Invalid email";
+            }
+        }
+    }
+
+    public function editTableAjax() {
+
+       echo "itemID: ".$_POST["itemID"]."<br>".
+           "oldValue: ".$_POST["oldValue"]."<br>".
+           "collectionID: ".$_SESSION["collection"]->getCollectionID()."<br>".
+           "col: ". $_POST["colName"];
+
+
     }
 
     /**

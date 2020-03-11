@@ -4,34 +4,36 @@
 <!--    name of collection as header -->
     <h1>{{ @SESSION['collection']->getName() }}</h1>
     <h3>{{ @SESSION['collection']->getDescription() }}</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Item ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
-                    <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
-                        <th>{{ @attrName }}</th>
-                    </repeat>
-                </check>
-            </tr>
-        </thead>
-        <tbody>
-            <repeat group = "{{ @itemsRepeat }}" value = "{{ @items }}">
+    <div class="table-responsive">
+        <table class="table table-hover table-striped" id="table">
+            <thead>
                 <tr>
-                    <td>{{ @items['itemID'] }}</td>
-                    <td>{{ @items['itemName'] }}</td>
-                    <td>{{ @items['itemDescription'] }}</td>
+                    <th scope="col">Item ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
                     <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
                         <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
-                            <td>{{ @db->getItemAttrValue(@attrID, @items['itemID']) }}</td>
+                            <th>{{ @attrName }}</th>
                         </repeat>
                     </check>
                 </tr>
-            </repeat>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <repeat group = "{{ @itemsRepeat }}" value = "{{ @items }}">
+                    <tr>
+                        <td>{{ @items['itemID'] }}</td>
+                        <td>{{ @items['itemName'] }}</td>
+                        <td>{{ @items['itemDescription'] }}</td>
+                        <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
+                            <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
+                                <td>{{ @db->getItemAttrValue(@attrID, @items['itemID']) }}</td>
+                            </repeat>
+                        </check>
+                    </tr>
+                </repeat>
+            </tbody>
+        </table>
+    </div>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
         Add an item
@@ -46,6 +48,7 @@
         <br>
         <span class="err">{{ @errors['invalidAttributeName'] }}</span>
     </check>
+    <p id="result"></p>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

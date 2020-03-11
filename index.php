@@ -58,5 +58,15 @@ $iController->getF3()->route("GET|POST /logout", function (){
     $iController->logout();
 });
 
+$iController->getF3()->route("POST /signupAjax", function (){
+    global $iController;
+    $iController->signupAjax();
+});
+
+$iController->getF3()->route("POST /editTableAjax", function (){
+    global $iController;
+    $iController->editTableAjax();
+});
+
 //Run Fat-Frees
 $iController->getF3()->run();

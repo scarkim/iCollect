@@ -5,7 +5,8 @@
         <h1>Sign Up</h1>
         <div class="positioner input-effect form-inline">
             <label for="username" id="label-username">Username
-                <span id="ajax-name-result" class="err"></span>
+                <span id="ajax-name-unavailable" class="text-danger"></span>
+                <span id="ajax-name-available" class="text-success"></span>
                 <span class="err" id="err-username">*alpha-numeric only</span>
                 <check if="{{ @errors['username'] }}">
                     <span class="err" >{{ @errors['username'] }}</span>

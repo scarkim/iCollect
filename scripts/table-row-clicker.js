@@ -13,7 +13,7 @@ $('#table').bootstrapTable({
                 {itemID:row[0], oldValue:value, colName:colName, newValue:newValue},
                 function (result) {
                     $("#result").html(result);
-                    window.location.reload();
+                    window.location.assign(window.location);
                 });
         }
 

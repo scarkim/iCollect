@@ -1,34 +1,41 @@
 <include href="views/header.html" />
 <include href="views/site-nav.html"></include>
 <div class = "container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Welcome, {{ @SESSION['user']->getUsername() }}!</h1>
-        </div>
 
-        <div class="col-sm-6">
+        <div class="float-left">
+            <h1>Welcome, {{ @SESSION['user']->getUsername() }}!</h1>
+            <h3>Collections</h3>
+
             <check if="{{ @SESSION['user']->getProfileImg() !== null }}">
                 <true>
                     <img src="{{@SESSION['user']->getProfileImg()}}"
-                         class="rounded"
+                         class="rounded profile-pic"
                          alt="Profile image"
                          width="100%">
                 </true>
                 <false>
-                    <img  id ="default-profile" src="images/default-profile.png"
-                          class="rounded"
+                    <img  src="images/default-profile.png"
+                          class="rounded profile-pic"
                           alt="Default Profile image"
                           width="100%">
                 </false>
             </check>
             <br><br>
-            <a class="btn btn-primary" href="createcollection">Create a new collection</a>
+            <check if="{{ @SESSION['user']->getPremium() == 0 && count(@collectionsRepeat) >=5 }}">
+                <true>
+                    <a class="btn btn-primary disabled" href="#">Create a new collection</a>
+                </true>
+                <false>
+                    <a class="btn btn-primary" href="createcollection">Create a new collection</a>
+                </false>
+            </check>
         </div>
-
-        <div class="col-sm-3 m-auto">
-        <h3>Collections</h3>
+</div>
+</div>
+    <div class="row mb-0">
         <repeat group="{{ @collectionsRepeat }}" value="{{ @collection }}">
-                <div class="card h-100 m-auto mb-1" style="width: 14em;">
+            <div class="card h-100" style="width: 14rem;">
+                <div class="card h-100 m-auto" style="width: 14em;">
                     <check if="{{ @collection['collectionImage'] !== null }}">
                         <true>
                             <img class="card-img-top" height="130"
@@ -37,7 +44,7 @@
                         </true>
                         <false>
                             <img class="card-img-top" height="130"
-                                 src="images/sample-pic1.jpg"
+                                 src="images/default-collection.jpg"
                                  alt="Card image cap">
                         </false>
                     </check>
@@ -47,8 +54,8 @@
                         <a href="{{ @collection['collectionID'] }}">View Collection</a>
                     </div>
                 </div>
+            </div>
+
         </repeat>
-        </div>
-    </div>
 </div>
 <include href="views/footer.html" />

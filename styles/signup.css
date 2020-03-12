@@ -92,12 +92,12 @@ input[type="password"]{
     background: #F8F9FA;
 }
 
-#default-profile {
+.profile-pic {
     /*float:left;*/
     width: 180px;
 }
 .card {
-    margin: 15px;
+    margin: 10px;
 }
 
 .err {

@@ -367,12 +367,18 @@ class ICollectController {
 
     public function editTableAjax() {
 
-       echo "itemID: ".$_POST["itemID"]."<br>".
+       /*echo "itemID: ".$_POST["itemID"]."<br>".
            "oldValue: ".$_POST["oldValue"]."<br>".
            "collectionID: ".$_SESSION["collection"]->getCollectionID()."<br>".
-           "col: ". $_POST["colName"];
-
-
+           "col: ". $_POST["colName"]."<br>".
+           "newValue: ".$_POST["newValue"] ;*/
+       if ($_POST["colName"] === "Name" OR $_POST["colName"] === "Description") {
+           //echo "gtg";
+           //if ($_POST["colName"] === "Name"
+           $this->_db->changeItemValue($_POST["itemID"], $_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["newValue"]);
+       } else {
+           $this->_db->changeItemAttributeValue($_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["itemID"], $_POST["newValue"]);
+       }
     }
 
     /**

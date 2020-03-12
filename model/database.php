@@ -200,7 +200,8 @@ class Database
      * @return array
      */
     function getCollectionItems($collID){
-        $sql = "SELECT * FROM `collectionItems` WHERE collectionID ='$collID'";
+        $sql = "SELECT * FROM `collectionItems` WHERE collectionID ='$collID'
+ORDER BY itemID";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -247,5 +248,39 @@ class Database
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result["itemValue"];
+    }
+
+    function changeItemValue($itemID, $collectionID, $colName, $newValue) {
+        if ($colName === "Name") {
+            $sql = "UPDATE `collectionItems` 
+                SET itemName = '$newValue'
+                WHERE itemID = '$itemID'";
+        } else {
+            $sql = "UPDATE `collectionItems` 
+                SET itemDescription = '$newValue'
+                WHERE itemID = '$itemID'";
+        }
+
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+    }
+
+    function changeItemAttributeValue($collectionID, $colName, $itemID, $newValue) {
+        $attrID = $this->getAttributeID($collectionID, $colName);
+        $sql = "UPDATE `itemAttributeValue` 
+                SET itemValue = '$newValue'
+                WHERE itemID = '$itemID' AND attributeID = '$attrID'";
+
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+    }
+
+    function getAttributeID($collectionID, $colName) {
+        $sql = "SELECT attributeID From `collectionAttributes` 
+                WHERE collectionID = '$collectionID' AND attributeName = '$colName'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        return $result["attributeID"];
     }
 }

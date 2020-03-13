@@ -283,4 +283,7 @@ ORDER BY itemID";
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result["attributeID"];
     }
+    function deleteCollection($collection_id){
+        $sql = 'DELETE FROM userCollections WHERE collectionID=$collection_id';
+    }
 }

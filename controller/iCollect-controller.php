@@ -231,9 +231,7 @@ class ICollectController {
                     }
                     //add else error
                 }
-            } /*elseif (isset($_POST["editValue"])) {
-                echo "itemID: ".$_POST["itemID"].", oldValue: ".$_POST["oldValue"];
-            }*/
+            }
         }
 
         $collection = $this->_db->getCollection($collID);
@@ -374,6 +372,7 @@ class ICollectController {
                $this->_db->changeItemValue($_POST["itemID"], $_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["newValue"]);
            } else {
                $this->_db->changeItemAttributeValue($_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["itemID"], $_POST["newValue"]);
+
            }
        } elseif (isset($_POST["itemDeletion"])) {
            $this->_db->deleteItem($_POST["itemID"]);

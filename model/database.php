@@ -267,9 +267,15 @@ ORDER BY itemID";
 
     function changeItemAttributeValue($collectionID, $colName, $itemID, $newValue) {
         $attrID = $this->getAttributeID($collectionID, $colName);
-        $sql = "UPDATE `itemAttributeValue` 
+        $valueExists = $this->getItemAttrValue($attrID, $itemID);
+        if ($valueExists) {
+            $sql = "UPDATE `itemAttributeValue` 
                 SET itemValue = '$newValue'
                 WHERE itemID = '$itemID' AND attributeID = '$attrID'";
+        } else {
+            $this->addItemAttributeValue($itemID, $attrID, $newValue);
+        }
+
 
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();

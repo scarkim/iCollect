@@ -1,20 +1,26 @@
 
 $('#table').bootstrapTable({
     onClickCell: function (field, value, row, $element) {
-        /*alert(field +', '+ value +', '+ row[0] +', '+ $element[0]);*/
         let colName = document.getElementsByTagName("th")[field].innerText;
-        if (colName === "") return;
-        if (colName === "Item ID") return;
-        let newValue = prompt("Change Item "+ row[0] + "\n" + "Original " + colName +": "+ value + "\n" + "New " + colName+":\n(leave blank to clear the data)");
-        if (newValue != null) {
-            $.post(
-                "editTableAjax",
-                {itemID:row[0], oldValue:value, colName:colName, newValue:newValue},
-                function (result) {
-                    $("#result").html(result);
-                    window.location.assign(window.location);
-                });
-        }
+
+        $("#newValueLabel").html("<span>Change Item "+ row[0] + "<br>" + "Original " + colName +": "+ value + "<br>" + "New " + colName+":</span><br>");
+        $("#confirmItemEdit").data("id", row[0]);
+        $("#confirmItemEdit").data("colName", colName);
+        $("#confirmItemEdit").data("oldValue", value);
+
+        if (colName !== "Item ID" && colName !== "") $('#editValueModal').modal("toggle");
+    }
+});
+
+$("#confirmItemEdit").click(function () {
+    if ($("#newValue").val() != null) {
+        $.post(
+            "editTableAjax",
+            {itemID:$("#confirmItemEdit").data("id"), oldValue:$("#confirmItemEdit").data("oldValue"), colName:$("#confirmItemEdit").data("colName"), newValue:$("#newValue").val()},
+            function (result) {
+                $("#result").html(result);
+                window.location.assign(window.location);
+            });
     }
 });
 

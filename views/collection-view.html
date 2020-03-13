@@ -21,7 +21,7 @@
             </thead>
             <tbody>
                 <repeat group = "{{ @itemsRepeat }}" value = "{{ @items }}">
-                    <tr>
+                    <tr >
                         <td>{{ @items['itemID'] }}</td>
                         <td>{{ @items['itemName'] }}</td>
                         <td>{{ @items['itemDescription'] }}</td>
@@ -137,7 +137,31 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="delCollectionModal" tabindex="-1" role="dialog" aria-labelledby="modalDelTitle" aria-hidden="true">
+    <div class="modal fade" id="editValueModal" tabindex="-1" role="dialog" aria-labelledby="modalEditTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditTitle">Edit Item Attribute</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="newValue" id="newValueLabel"></label>
+                    <input type="text" id="newValue">
+                    <span>(leave blank to clear the data)</span><br>
+                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                        <span aria-hidden="true">Cancel</span>
+                    </button>
+                    <button type="button" class="btn-danger" id="confirmItemEdit" data-id="" data-colName="" data-oldValue="" data-dismiss="modal" aria-label="Confirm">
+                        <span aria-hidden="true">Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="modal fade" id="delCollectionModal" tabindex="-1" role="dialog" aria-labelledby="modalDelTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

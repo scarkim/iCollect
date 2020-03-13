@@ -18,7 +18,8 @@
         </div>
         <div class="positioner input-effect form-inline">
             <label for="email">Email
-                <span id="ajax-email-result" class="err"></span>
+                <span id="ajax-email-unavailable" class="text-danger"></span>
+                <span id="ajax-email-available" class="text-success"></span>
                 <span class="err" id="err-email">*valid email required</span>
                 <check if="{{ @errors['email'] }}">
                     <span class="err">{{ @errors['email'] }}</span>

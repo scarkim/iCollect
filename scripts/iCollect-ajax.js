@@ -23,10 +23,18 @@ $(document).ready(function() {
 
     $("#email").keyup(function (e) {
         e.preventDefault();
+        $("#ajax-email-unavailable").text("");
+        $("#ajax-email-available").text("");
+
         $.post("signupAjax", { email: $("#email").val()},
             function (result)
             {
-                $("#ajax-email-result").text(result);
+                if(result === "Email taken" || result === "Invalid email") {
+                    $("#ajax-email-unavailable").text(result);
+                } else {
+                    $("#ajax-email-available").text(result);
+                }
+
             }
         );
     });

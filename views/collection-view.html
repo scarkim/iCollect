@@ -16,6 +16,7 @@
                             <th>{{ @attrName }}</th>
                         </repeat>
                     </check>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                                 <td>{{ @db->getItemAttrValue(@attrID, @items['itemID']) }}</td>
                             </repeat>
                         </check>
+                        <td><button class="btn-sm btn-danger deleteItem" data-name="{{ @items['itemName'] }}" data-id="{{ @items['itemID'] }}" data-toggle="modal" data-target="#delItemModal">Delete</button></td>
                     </tr>
                 </repeat>
             </tbody>
@@ -43,6 +45,10 @@
        disabled
     </check>>
         Add a new attribute
+    </button>
+    <br>
+    <button type="button" class="btn btn-danger mt-3" id="deleteCollection" data-name="{{  @SESSION['collection']->getName() }}" data-id="{{ @SESSION['collection']->getCollectionID() }}" data-toggle="modal" data-target="#delCollectionModal">
+        Delete this collection
     </button>
     <check if="{{ @errors['invalidAttributeName'] }}">
         <br>
@@ -111,10 +117,46 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-success">
-        Delete this collection
-    </button>
-
+    <div class="modal fade" id="delItemModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Delete Item #<span id="itemToDelete"></span>?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                        <span aria-hidden="true">Cancel</span>
+                    </button>
+                    <button type="button" class="btn-danger" id="confirmItemDel" data-id="" data-dismiss="modal" aria-label="Confirm">
+                        <span aria-hidden="true">Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="delCollectionModal" tabindex="-1" role="dialog" aria-labelledby="modalDelTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDelTitle">Delete Collection {{ @SESSION["collection"]->getName() }} and all its items?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                        <span aria-hidden="true">Cancel</span>
+                    </button>
+                    <button type="button" class="btn-danger" id="confirmCollectionDel" data-id="" data-dismiss="modal" aria-label="Confirm">
+                        <span aria-hidden="true">Confirm</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>

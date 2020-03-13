@@ -283,7 +283,37 @@ ORDER BY itemID";
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result["attributeID"];
     }
-    function deleteCollection($collection_id){
-        $sql = 'DELETE FROM userCollections WHERE collectionID=$collection_id';
+
+    function deleteItem($itemID) {
+        $sql = "DELETE FROM `collectionItems` 
+                WHERE itemID = '$itemID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+
+        $sql2 = "DELETE FROM `itemAttributeValue` 
+                WHERE itemID = '$itemID'";
+        $statement2 = $this->_cnxn->prepare($sql2);
+        $statement2->execute();
+    }
+
+    function deleteCollection($collectionID){
+        $sql = "SELECT itemID FROM `collectionItems`
+                WHERE collectionID = '$collectionID'";
+        $statement = $this->_cnxn->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result AS $row) {
+            $this->deleteItem($row["itemID"]);
+        }
+
+        $sql2 = "DELETE FROM `collectionAttributes`
+                WHERE collectionID = '$collectionID'";
+        $statement2 = $this->_cnxn->prepare($sql2);
+        $statement2->execute();
+
+        $sql3 = "DELETE FROM `userCollections` WHERE collectionID = '$collectionID'";
+        $statement3 = $this->_cnxn->prepare($sql3);
+        $statement3->execute();
     }
 }

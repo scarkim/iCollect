@@ -101,10 +101,6 @@ if (document.title === "iCollect Signup" ||
 
         function validateCollection() {
 
-
-            let username = document.getElementById("loginName").value;
-            let password = document.getElementById("password").value;
-
             let collectionTitle = document.getElementById("title").value;
             let collectionDescription = document.getElementById("description").value;
 

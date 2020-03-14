@@ -1,14 +1,41 @@
 <?php
 
+/**
+ * Class Collection
+ * Creates a collection in which items
+ * can be added into
+ */
 class Collection
 {
+    /**
+     * The ID of the collection
+     * Auto incrementing int
+     * @var
+     */
     private $_collectionID;
+    /**
+     * Name of collection
+     * @var string
+     */
     private $_name;
+    /**
+     * Description of collection
+     * @var string
+     */
     private $_description;
+    /**
+     * Whether of not the collection is a premium type
+     * @var int
+     */
     private $_premium;
+    /**
+     * Cover image for the collection
+     * @var string
+     */
     private $_collectionImage;
 
     /**
+     * Returns the cover image of collection
      * @return mixed
      */
     public function getCollectionImage()
@@ -17,6 +44,7 @@ class Collection
     }
 
     /**
+     * Sets the cover image of collection
      * @param mixed $collectionImage
      */
     public function setCollectionImage($collectionImage)
@@ -38,6 +66,7 @@ class Collection
     }
 
     /**
+     * returns name of the collection
      * @return mixed
      */
     public function getName()
@@ -61,15 +90,18 @@ class Collection
     public function getDescription()
     {
         return $this->_description;
-    }/**
- * @return mixed
- */
+    }
+    /**
+    * @return mixed
+     * Returns the collections ID (required)
+    */
     public function getCollectionID()
     {
         return $this->_collectionID;
     }
     /**
      * @param mixed $collectionID
+     * sets the collections ID (required)
      */
     public function setCollectionID($collectionID)
     {
@@ -78,6 +110,7 @@ class Collection
 
     /**
      * @param mixed $description
+     * sets the collections description (optional)
      */
     public function setDescription($description)
     {
@@ -86,6 +119,7 @@ class Collection
 
     /**
      * @return mixed
+     * returns collection type 0 or 1 (required)
      */
     public function getPremium()
     {
@@ -94,6 +128,7 @@ class Collection
 
     /**
      * @param mixed $premium
+     * sets the collection type 0 or 1 (required)
      */
     public function setPremium($premium)
     {

@@ -1,11 +1,26 @@
 <?php /** @noinspection DuplicatedCode */
 
 class ICollectController {
+    /**
+     * @var Base
+     */
     private $_f3;
+    /**
+     * @var Validate
+     */
     private $_validator;
+    /**
+     * @var Database
+     */
     private $_db;
+    /**
+     * @var
+     */
     private $_user;
 
+    /**
+     * ICollectController constructor.
+     */
     public function __construct()
     {
         //Instantiate Fat-Free
@@ -16,6 +31,9 @@ class ICollectController {
         $this->_f3->set('DEBUG', 3);
     }
 
+    /**
+     *
+     */
     public function home()
     {
         $_SESSION['page']="iCollect";
@@ -23,6 +41,9 @@ class ICollectController {
         echo $view->render("views/home.html");
     }
 
+    /**
+     *
+     */
     public function login()
     {
         $_SESSION['page']="iCollect Login";
@@ -57,7 +78,11 @@ class ICollectController {
         echo $view->render("views/login.html");
     }
 
-    public function signup() {
+    /**
+     *
+     */
+    public function signup()
+    {
         $_SESSION['page']="iCollect Signup";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $isValid = true;
@@ -126,8 +151,11 @@ class ICollectController {
         echo $view->render("views/signup.html");
     }
 
-    public function welcome() {
-
+    /**
+     *
+     */
+    public function welcome()
+    {
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
         }
@@ -138,7 +166,12 @@ class ICollectController {
         echo $view->render("views/welcome.html");
     }
 
-    public function createCollection() {
+    /**
+     * This  method creates a collection in the create collection page. It sets the
+     * name of the collecrion and the description if provided. It
+     */
+    public function createCollection()
+    {
         $_SESSION['page']="Create Collection";
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST["create"])) {
@@ -146,7 +179,6 @@ class ICollectController {
                 $this->_f3->set("description", trim($_POST["description"]));
 
                 $isValid = true;
-
                 if (!$this->_validator->validCollectionName(trim($_POST["title"]))) {
                     $this->_f3->set("errors['invalidCollectionName']", "No special characters, not empty and less than 50.");
                     $isValid = false;
@@ -180,7 +212,11 @@ class ICollectController {
         echo $view->render("views/create-collection.html");
     }
 
-    public function showCollection($collID){
+    /**
+     * @param $collID
+     */
+    public function showCollection($collID)
+    {
 
         if ($collID === "index.php") {
             $this->_f3->reroute('/');
@@ -219,10 +255,7 @@ class ICollectController {
 
                 }
             } elseif (isset($_POST["add-attr"])) {
-
                 //add validation of attribute values
-                /**/
-
                 if ($isValid) {
                     $newAttrID = $this->_db->insertAttribute($collID, $_POST["name"]);
                     if ($newAttrID) {
@@ -256,7 +289,11 @@ class ICollectController {
         echo $view->render("views/collection-view.html");
     }
 
-    public function success() {
+    /**
+     *
+     */
+    public function success()
+    {
 
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
@@ -326,13 +363,21 @@ class ICollectController {
         echo $view->render("views/success.html");
     }
 
-    public function logout() {
+    /**
+     *
+     */
+    public function logout()
+    {
         unset($_SESSION["user"]);
         unset($_SESSION["collection"]);
         $this->_f3->reroute('/');
     }
 
-    public function signupAjax() {
+    /**
+     *
+     */
+    public function signupAjax()
+    {
         if(isset($_POST["username"])) {
 
             $username = $_POST["username"];
@@ -363,7 +408,11 @@ class ICollectController {
         }
     }
 
-    public function editTableAjax() {
+    /**
+     *
+     */
+    public function editTableAjax()
+    {
 
        if (isset($_POST["colName"])) {
            if ($_POST["colName"] === "Name" OR $_POST["colName"] === "Description") {

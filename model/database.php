@@ -26,11 +26,13 @@ class Database
     }
 
     /**
+     * Checks for user with given username and password
      * @param $username
      * @param $password
      * @return mixed
      */
-    function checkCredentials($username, $password){
+    function checkCredentials($username, $password)
+    {
             $sql = "SELECT * FROM `users` WHERE userName='$username' AND
                 password='$password'";
             $statement = $this->_cnxn->prepare($sql);
@@ -41,11 +43,13 @@ class Database
     }
 
     /**
+     * Adds a new user to the users table given the user object and password
      * @param $user
      * @param $password
      * @return string|null
      */
-    function addNewUser($user, $password) {
+    function addNewUser($user, $password)
+    {
         $username = $user->getUsername();
         $userEmail = $user->getUserEmail();
         $accountType = $user->getPremium();
@@ -60,12 +64,14 @@ class Database
     }
 
     /**
+     * inserts an item into collectionItems table
      * @param $name
      * @param $description
      * @param $collID
      * @return string|null
      */
-    function insertItem($name, $description, $collID){
+    function insertItem($name, $description, $collID)
+    {
         $sql = "INSERT INTO `collectionItems`  (itemName, itemDescription, collectionID)
            VALUES ('$name', '$description', $collID )";
         $statement = $this->_cnxn->prepare($sql);
@@ -77,6 +83,7 @@ class Database
     }
 
     /**
+     * checks if users table contains $email in userEmail column
      * @param $email
      * @return mixed
      */
@@ -94,10 +101,12 @@ class Database
     }
 
     /**
+     * Checks if users table contains $username in username column
      * @param $username
      * @return mixed
      */
-    function containsUsername($username){
+    function containsUsername($username)
+    {
         $sql = "SELECT * FROM `users` WHERE userName='$username'";
         //2. prepare the statement
         $statement = $this->_cnxn->prepare($sql);
@@ -109,6 +118,7 @@ class Database
     }
 
     /**
+     * Returns the user with the associated $username
      * @param $username
      * @return User
      */
@@ -127,6 +137,7 @@ class Database
     }
 
     /**
+     * Adds a new collection
      * @param $collection
      * @return string|null
      */
@@ -146,10 +157,12 @@ class Database
     }
 
     /**
+     * Returns the collections of a user
      * @param $user_id
      * @return array
      */
-    function getCollections($user_id) {
+    function getCollections($user_id)
+    {
         $sql = "SELECT * FROM `userCollections` WHERE userID ='$user_id'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
@@ -158,6 +171,7 @@ class Database
     }
 
     /**
+     * Adds a user's profile image
      * @param $userID
      * @param $image
      */
@@ -171,6 +185,7 @@ class Database
     }
 
     /**
+     * Adds a cover image to a collection
      * @param $collectionID
      * @param $image
      */
@@ -184,10 +199,12 @@ class Database
     }
 
     /**
+     * returns the collection with the given $collID
      * @param $collID
      * @return mixed
      */
-    function getCollection($collID) {
+    function getCollection($collID)
+    {
         $sql = "SELECT * FROM `userCollections` WHERE collectionID ='$collID'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
@@ -196,10 +213,13 @@ class Database
     }
 
     /**
+     * returns the collection items from the
+     * given collection ID
      * @param $collID
      * @return array
      */
-    function getCollectionItems($collID){
+    function getCollectionItems($collID)
+    {
         $sql = "SELECT * FROM `collectionItems` WHERE collectionID ='$collID'
 ORDER BY itemID";
         $statement = $this->_cnxn->prepare($sql);
@@ -208,7 +228,14 @@ ORDER BY itemID";
         return $result;
     }
 
-    function insertAttribute($collID, $attrName) {
+    /**
+     * Inserts a new attribute into collectionAttributes
+     * @param $collID
+     * @param $attrName
+     * @return string|null
+     */
+    function insertAttribute($collID, $attrName)
+    {
         $sql = "INSERT INTO `collectionAttributes` (collectionID, attributeName) 
             VALUES ('$collID', '$attrName')";
         $statement = $this->_cnxn->prepare($sql);
@@ -219,7 +246,13 @@ ORDER BY itemID";
         }
     }
 
-    function getAttributes($collID) {
+    /**
+     * Returns the attributes of a collection in ascending order
+     * @param $collID
+     * @return array
+     */
+    function getAttributes($collID)
+    {
         $sql = "SELECT * FROM `collectionAttributes` WHERE collectionID ='$collID'
                 ORDER BY attributeID ASC";
         $statement = $this->_cnxn->prepare($sql);
@@ -233,7 +266,15 @@ ORDER BY itemID";
         return $returnArray;
     }
 
-    function addItemAttributeValue($itemID, $attrID, $itemValue) {
+    /**
+     * adds an attribute value to an item
+     * @param $itemID
+     * @param $attrID
+     * @param $itemValue
+     * @return bool
+     */
+    function addItemAttributeValue($itemID, $attrID, $itemValue)
+    {
         $sql = "INSERT INTO `itemAttributeValue` (itemID, attributeID, itemValue) 
             VALUES ('$itemID', '$attrID', '$itemValue')";
         $statement = $this->_cnxn->prepare($sql);
@@ -241,7 +282,15 @@ ORDER BY itemID";
         return $result;
     }
 
-    function getItemAttrValue($attrID, $itemID) {
+    /**
+     * returns the item attribute value given the attribute's
+     * ID and the item's ID
+     * @param $attrID
+     * @param $itemID
+     * @return mixed
+     */
+    function getItemAttrValue($attrID, $itemID)
+    {
         $sql = "SELECT itemValue From `itemAttributeValue` 
                 WHERE attributeID = '$attrID' AND itemID = '$itemID'";
         $statement = $this->_cnxn->prepare($sql);
@@ -250,7 +299,15 @@ ORDER BY itemID";
         return $result["itemValue"];
     }
 
-    function changeItemValue($itemID, $collectionID, $colName, $newValue) {
+    /**
+     * changes name, description, or attribute value of an item
+     * @param $itemID
+     * @param $collectionID
+     * @param $colName
+     * @param $newValue
+     */
+    function changeItemValue($itemID, $collectionID, $colName, $newValue)
+    {
         if ($colName === "Name") {
             $sql = "UPDATE `collectionItems` 
                 SET itemName = '$newValue'
@@ -265,7 +322,15 @@ ORDER BY itemID";
         $statement->execute();
     }
 
-    function changeItemAttributeValue($collectionID, $colName, $itemID, $newValue) {
+    /**
+     * updates the attribute value of given item
+     * @param $collectionID
+     * @param $colName
+     * @param $itemID
+     * @param $newValue
+     */
+    function changeItemAttributeValue($collectionID, $colName, $itemID, $newValue)
+    {
         $attrID = $this->getAttributeID($collectionID, $colName);
         $valueExists = $this->getItemAttrValue($attrID, $itemID);
         if ($valueExists) {
@@ -281,7 +346,15 @@ ORDER BY itemID";
         $statement->execute();
     }
 
-    function getAttributeID($collectionID, $colName) {
+    /**
+     * returns the attributeID from collectionAttributes table if
+     * collectionID and name match
+     * @param $collectionID
+     * @param $colName
+     * @return mixed
+     */
+    function getAttributeID($collectionID, $colName)
+    {
         $sql = "SELECT attributeID From `collectionAttributes` 
                 WHERE collectionID = '$collectionID' AND attributeName = '$colName'";
         $statement = $this->_cnxn->prepare($sql);
@@ -290,7 +363,12 @@ ORDER BY itemID";
         return $result["attributeID"];
     }
 
-    function deleteItem($itemID) {
+    /**
+     * delets the item associated with $itemID along with its attribute values
+     * @param $itemID
+     */
+    function deleteItem($itemID)
+    {
         $sql = "DELETE FROM `collectionItems` 
                 WHERE itemID = '$itemID'";
         $statement = $this->_cnxn->prepare($sql);
@@ -302,7 +380,12 @@ ORDER BY itemID";
         $statement2->execute();
     }
 
-    function deleteCollection($collectionID){
+    /**
+     * deletes collection associated with the $collectionID
+     * @param $collectionID
+     */
+    function deleteCollection($collectionID)
+    {
         $sql = "SELECT itemID FROM `collectionItems`
                 WHERE collectionID = '$collectionID'";
         $statement = $this->_cnxn->prepare($sql);

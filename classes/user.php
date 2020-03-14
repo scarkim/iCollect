@@ -1,30 +1,52 @@
 <?php
+
+/**
+ * Class User creates a user object
+ */
 class User
 {
-
+    /**
+     * The user's ID
+     * @var int
+     */
     private $_userID;
+    /**
+     * The user's username
+     * @var string
+     */
     private $_username;
-    //private $_password;
+
+    /**
+     * The user's premium status
+     * @var int
+     */
     private $_premium;
+    /**
+     * The user's email
+     * @var string
+     */
     private $_userEmail;
+    /**
+     * The user's profile image (optional)
+     * @var string
+     */
     private $_profileImg;
 
     /**
      * User constructor.
-     * @param $username
-     * @param $password
+     * @param null $username
      * @param $premium
      * @param $userEmail
      */
-    public function __construct($username = null, /*$password=null,*/ $premium=null, $userEmail=null)
+    public function __construct($username = null,  $premium=null, $userEmail=null)
     {
         $this->_username = $username;
-        //$this->_password = $password;
         $this->_premium = $premium;
         $this->_userEmail = $userEmail;
     }
 
     /**
+     * returns the user's profile picture
      * @return mixed
      */
     public function getProfileImg()
@@ -33,6 +55,7 @@ class User
     }
 
     /**
+     * sets the user's profile picture (optional)
      * @param mixed $profileImg
      */
     public function setProfileImg($profileImg)
@@ -41,6 +64,7 @@ class User
     }
 
     /**
+     * returns the user's ID
      * @return mixed
      */
     public function getUserID()
@@ -49,6 +73,7 @@ class User
     }
 
     /**
+     * sets the user's ID
      * @param mixed $userID
      */
     public function setUserID($userID)
@@ -57,7 +82,8 @@ class User
     }
 
     /**
-     * @return mixed
+     * returns the username
+     * @return mixed username
      */
     public function getUsername()
     {
@@ -65,7 +91,8 @@ class User
     }
 
     /**
-     * @param mixed $username
+     * sets the username
+     * @param $username
      */
     public function setUsername($username)
     {
@@ -73,23 +100,8 @@ class User
     }
 
     /**
-     * @return mixed
-     */
-    /*public function getPassword()
-    {
-        return $this->_password;
-    }*/
-
-    /**
-     * @param mixed $password
-     */
-    /*public function setPassword($password)
-    {
-        $this->_password = $password;
-    }*/
-
-    /**
-     * @return mixed
+     * @return int
+     * returns whether or not the user is a premium user
      */
     public function getPremium()
     {
@@ -98,6 +110,7 @@ class User
 
     /**
      * @param mixed $premium
+     * set status of user's premium (0 or 1)
      */
     public function setPremium($premium)
     {
@@ -105,7 +118,8 @@ class User
     }
 
     /**
-     * @return mixed
+     * returns user's email
+     * @return string
      */
     public function getUserEmail()
     {
@@ -113,12 +127,11 @@ class User
     }
 
     /**
+     * sets user's email
      * @param mixed $userEmail
      */
     public function setUserEmail($userEmail)
     {
         $this->_userEmail = $userEmail;
     }
-
-
 }

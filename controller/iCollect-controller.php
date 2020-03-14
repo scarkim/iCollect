@@ -14,7 +14,7 @@ class ICollectController {
      */
     private $_db;
     /**
-     * @var
+     * @var User
      */
     private $_user;
 
@@ -32,7 +32,7 @@ class ICollectController {
     }
 
     /**
-     *
+     * Home page of iCollect
      */
     public function home()
     {
@@ -42,7 +42,7 @@ class ICollectController {
     }
 
     /**
-     *
+     * Login page
      */
     public function login()
     {
@@ -79,7 +79,7 @@ class ICollectController {
     }
 
     /**
-     *
+     * Signup page
      */
     public function signup()
     {
@@ -152,7 +152,8 @@ class ICollectController {
     }
 
     /**
-     *
+     * Welcome page which displays user's collections and
+     * allows users to create new collections
      */
     public function welcome()
     {
@@ -168,7 +169,7 @@ class ICollectController {
 
     /**
      * This  method creates a collection in the create collection page. It sets the
-     * name of the collecrion and the description if provided. It
+     * name of the collection and the description if provided.
      */
     public function createCollection()
     {
@@ -213,6 +214,7 @@ class ICollectController {
     }
 
     /**
+     * This method takes a collection ID and displays all items in it
      * @param $collID
      */
     public function showCollection($collID)
@@ -290,11 +292,10 @@ class ICollectController {
     }
 
     /**
-     *
+     * User was successfully created/logged in
      */
     public function success()
     {
-
         if (!isset($_SESSION["user"])) {
             $this->_f3->reroute('/');
         }
@@ -364,7 +365,9 @@ class ICollectController {
     }
 
     /**
-     *
+     * Unsets user and collection session variables
+     * so the user is no longer logged in. Reroutes to
+     * the home page
      */
     public function logout()
     {
@@ -374,7 +377,7 @@ class ICollectController {
     }
 
     /**
-     *
+     * Ajax validation for signup values
      */
     public function signupAjax()
     {
@@ -409,11 +412,12 @@ class ICollectController {
     }
 
     /**
-     *
+     * Allows users to change item name, description, or attributes. Also allows
+     * users to delete items.
+     * Uses ajax validation to validate the values.
      */
     public function editTableAjax()
     {
-
        if (isset($_POST["colName"])) {
            if ($_POST["colName"] === "Name" OR $_POST["colName"] === "Description") {
                //echo "gtg";

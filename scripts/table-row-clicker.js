@@ -15,8 +15,9 @@ $('#table').bootstrapTable({
     }
 });
 
-$("#confirmItemEdit").click(function () {
-    if ($("#newValue").val() != null) {
+$("#confirmItemEdit").click(function (event) {
+    let value= $("#newValue").val();
+    if (value != null && value.match(/^[^<>#@$%^*|]+$/))  {
         let object = $("#confirmItemEdit");
         $.post(
             "editTableAjax",
@@ -25,6 +26,12 @@ $("#confirmItemEdit").click(function () {
             function (result) {
                 window.location.assign(window.location);
             });
+    }
+    else {
+        event.preventDefault();
+        event.stopPropagation();
+        document.getElementById("err-edit").innerText =
+            "No special characters allowed";
     }
 });
 

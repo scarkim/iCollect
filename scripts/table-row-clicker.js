@@ -2,10 +2,11 @@
 $('#table').bootstrapTable({
     onClickCell: function (field, value, row, $element) {
         let colName = document.getElementsByTagName("th")[field].innerText;
-//alert("Change Item "+ row[0] + "<br>" + "Original " + colName +": "+ value + "<br>" + "New " + colName);
         if (colName !== "Item ID" && colName !== "") {
             let object = $("#confirmItemEdit");
-            $("#newValueLabel").html("<span>Change Item "+ row[0] + "<br>" + "Original " + colName +": "+ value + "<br>" + "New " + colName+":</span><br>");
+            $("#newValueLabel").html("<span>Change Item "+ row[0] + "<br>" +
+                "Original " + colName +": "+ value + "<br>" +
+                "New " + colName+":</span><br>");
             object.data("id", row[0]);
             object.data("col-name", colName);
             object.data("old-value", value);
@@ -19,9 +20,9 @@ $("#confirmItemEdit").click(function () {
         let object = $("#confirmItemEdit");
         $.post(
             "editTableAjax",
-            {itemID:object.data("id"), oldValue:object.data("old-value"), colName:object.data("col-name"), newValue:$("#newValue").val()},
+            {itemID:object.data("id"), oldValue:object.data("old-value"),
+                colName:object.data("col-name"), newValue:$("#newValue").val()},
             function (result) {
-                $("#result").html(result);
                 window.location.assign(window.location);
             });
     }

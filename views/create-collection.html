@@ -27,7 +27,10 @@
                 <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
             </check>
             <textarea class="form-control" id = "description" name="description"
-                      rows="5" cols="100" placeholder="Max 200 characters."></textarea></label>
+                      rows="5" cols="100" placeholder="Max 200 characters.">
+
+            </textarea>
+            </label>
         </div>
         <check if="{{ @SESSION['user']->getPremium() === '1' }}">
             <div class="form-check" id="attribute-check">
@@ -41,8 +44,8 @@
         </check>
         <hr>
         <div class="form-group">
-            <!--<button type="submit" class="btn btn-success" name="add">Add Attributes</button>-->
-            <input type="submit" class="btn btn-primary" name="create" value="Create Collection">
+            <input type="submit" class="btn btn-primary"
+                   name="create" value="Create Collection">
         </div>
     </form>
     <check if="{{ @errors['addCollection'] }}">

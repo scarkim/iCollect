@@ -88,10 +88,10 @@ class Validate
      * @return bool
      */
     function validCollectionDescription($description)
- {
-     if ($description === "" OR $description == null) return true;
-     if (strlen($description) > 200) return false;
-     if (!preg_match("/^[^<>#@$%^*|]+$/", $description)) return false;
-     return true;
- }
+    {
+        if ($description === "" OR $description == null) return true;
+        if (strlen($description) > 200) return false;
+        if (!preg_match("/^[^<>#@$%^*|]+$/", $description)) return false;
+        return true;
+    }
 }

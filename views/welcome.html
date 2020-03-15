@@ -23,10 +23,12 @@
             <br><br>
             <check if="{{ @SESSION['user']->getPremium() == 0 && count(@collectionsRepeat) >=5 }}">
                 <true>
-                    <a class="btn btn-primary disabled" href="#">Create a new collection</a>
+                    <a class="btn btn-primary disabled"
+                       href="#">Create a new collection</a>
                 </true>
                 <false>
-                    <a class="btn btn-primary" href="createcollection">Create a new collection</a>
+                    <a class="btn btn-primary"
+                       href="createcollection">Create a new collection</a>
                 </false>
             </check>
         </div>
@@ -49,9 +51,12 @@
                         </false>
                     </check>
                     <div class="card-body">
-                        <h5 class="card-title">{{ @collection['collectionName'] }}</h5>
-                        <p class="card-text">{{ @collection['collectionDescription'] }}</p>
-                        <a href="{{ @collection['collectionID'] }}">View Collection</a>
+                        <h5 class="card-title">
+                            {{ @collection['collectionName'] }}</h5>
+                        <p class="card-text">
+                            {{ @collection['collectionDescription'] }}</p>
+                        <a href="{{ @collection['collectionID'] }}">
+                            View Collection</a>
                     </div>
                 </div>
             </div>

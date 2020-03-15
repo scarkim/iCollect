@@ -55,11 +55,13 @@ class ICollectController {
 
             if ($this->_db) {
                 if (!$this->_validator->validLogin($_POST["username"])) {
-                    $this->_f3->set("errors['invalidLogin']", "*invalid username.");
+                    $this->_f3->set("errors['invalidLogin']",
+                        "*invalid username.");
                     $isValid = false;
                 }
 
-                if (!$this->_db->checkCredentials($_POST["username"], $_POST['password'])) {
+                if (!$this->_db->checkCredentials($_POST["username"],
+                    $_POST['password'])) {
                     $this->_f3->set("errors['login']", "Try again.");
                     $isValid = false;
                 }
@@ -103,19 +105,25 @@ class ICollectController {
             }
 
             if ($this->_db) {
-                if (!$this->_validator->validLogin($_POST["username"]) OR $this->_db->containsUsername($_POST["username"])) {
-                    $this->_f3->set("errors['username']", "Please choose another name.");
+                if (!$this->_validator->validLogin($_POST["username"]) OR
+                    $this->_db->containsUsername($_POST["username"])) {
+                    $this->_f3->set("errors['username']",
+                        "Please choose another name.");
                     $isValid = false;
                 }
 
-                if (!$this->_validator->validEmail($_POST["email"]) OR $this->_db->containsEmail($_POST["email"]) ) {
-                    $this->_f3->set("errors['email']", "Please choose another email.");
+                if (!$this->_validator->validEmail($_POST["email"]) OR
+                    $this->_db->containsEmail($_POST["email"]) ) {
+                    $this->_f3->set("errors['email']",
+                        "Please choose another email.");
                     $isValid = false;
                 }
 
                 if ($this->_validator->validPassword($_POST["password"])) {
-                    if (!$this->_validator->passwordMatch($_POST["password"], $_POST["password2"])) {
-                        $this->_f3->set("errors['passwordMatch']", "*not a match");
+                    if (!$this->_validator->passwordMatch($_POST["password"],
+                        $_POST["password2"])) {
+                        $this->_f3->set("errors['passwordMatch']",
+                            "*not a match");
                         $isValid = false;
                     }
                 } else {
@@ -123,7 +131,8 @@ class ICollectController {
                     $isValid = false;
                 }
 
-                if (!$this->_validator->validateAcctType($_POST["accountType"])) {
+                if (!$this->_validator->validateAcctType(
+                    $_POST["accountType"])) {
                     $this->_f3->set("errors['acctType']", "I don't think so");
                     $isValid = false;
                 }
@@ -132,17 +141,19 @@ class ICollectController {
                 $isValid = false;
             }
 
-            //all inputs valid and user is added to the database, go to next page
+            //all inputs valid and user is added to the database, to next page
             if ($isValid) {
                 $_SESSION["user"]->setUsername($_POST["username"]);
                 $_SESSION["user"]->setUserEmail($_POST["email"]);
                 $_SESSION["user"]->setPremium($_POST["accountType"]);
-                $id = $this->_db->addNewUser($_SESSION["user"], $_POST["password"]);
+                $id = $this->_db->addNewUser($_SESSION["user"],
+                    $_POST["password"]);
                 if($id != null) {
                     $_SESSION["user"]->setUserID($id);
                     $this->_f3->reroute('/success');
                 } else {
-                    $this->_f3->set("errors['addNewUser']", "Something went wrong try again.");
+                    $this->_f3->set("errors['addNewUser']",
+                        "Something went wrong try again.");
                 }
             }
         }
@@ -162,14 +173,15 @@ class ICollectController {
         }
 
         $_SESSION['page']="Welcome";
-        $this->_f3->set("collectionsRepeat", $this->_db->getCollections($_SESSION["user"]->getUserID()));
+        $this->_f3->set("collectionsRepeat",
+            $this->_db->getCollections($_SESSION["user"]->getUserID()));
         $view = new Template();
         echo $view->render("views/welcome.html");
     }
 
     /**
-     * This  method creates a collection in the create collection page. It sets the
-     * name of the collection and the description if provided.
+     * This  method creates a collection in the create collection page. It
+     * sets the name of the collection and the description if provided.
      */
     public function createCollection()
     {
@@ -180,29 +192,37 @@ class ICollectController {
                 $this->_f3->set("description", trim($_POST["description"]));
 
                 $isValid = true;
-                if (!$this->_validator->validCollectionName(trim($_POST["title"]))) {
-                    $this->_f3->set("errors['invalidCollectionName']", "No special characters, not empty and less than 50.");
+                if (!$this->_validator->validCollectionName(
+                    trim($_POST["title"]))) {
+                    $this->_f3->set("errors['invalidCollectionName']",
+                        "No special characters, not empty and less than 50.");
                     $isValid = false;
                 }
 
-                if (!$this->_validator->validCollectionDescription(trim($_POST["description"]))) {
-                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation and less than 200.");
+                if (!$this->_validator->validCollectionDescription(
+                    trim($_POST["description"]))) {
+                    $this->_f3->set("errors['invalidCollectionDescription']",
+                        "Only regular punctuation and less than 200.");
                     $isValid = false;
                 }
 
                 if ($isValid) {
                     if (isset($_POST["add-attributes"])) {
                         $_SESSION["collection"] =
-                            new PremiumCollection(trim($_POST["title"]), trim($_POST["description"]), "1");
+                            new PremiumCollection(trim($_POST["title"]),
+                                trim($_POST["description"]), "1");
                     } else {
                         $_SESSION["collection"] =
-                            new Collection(trim($_POST["title"]), trim($_POST["description"]), "0");
+                            new Collection(trim($_POST["title"]),
+                                trim($_POST["description"]), "0");
                     }
 
-                    $_SESSION["collection"]->setCollectionID($this->_db->addCollection($_SESSION["collection"]));
+                    $_SESSION["collection"]->setCollectionID(
+                        $this->_db->addCollection($_SESSION["collection"]));
                     if ($_SESSION["collection"]->getCollectionID() === null) {
                         $this->_f3->set("errors['addCollection']",
-                            "Sorry, there was an error adding collection to the database");
+                            "Sorry, there was an error adding 
+                            collection to the database");
                     } else {
                         $this->_f3->reroute('/success');
                     }
@@ -234,12 +254,15 @@ class ICollectController {
             if (isset($_POST["add-item"])) {
 
                 if (!$this->_validator->validCollectionName($_POST["name"])) {
-                    $this->_f3->set("errors['invalidCollectionName']", "No special characters please.");
+                    $this->_f3->set("errors['invalidCollectionName']",
+                        "No special characters please.");
                     $isValid = false;
                 }
 
-                if(!$this->_validator->validCollectionDescription($_POST["description"])){
-                    $this->_f3->set("errors['invalidCollectionDescription']", "Only regular punctuation please.");
+                if(!$this->_validator->validCollectionDescription(
+                    $_POST["description"])){
+                    $this->_f3->set("errors['invalidCollectionDescription']",
+                        "Only regular punctuation please.");
                     $isValid = false;
                 }
 
@@ -247,11 +270,14 @@ class ICollectController {
                     $this->_f3->set("name", $_POST["name"]);
                     $this->_f3->set("description", $_POST["description"]);
                     //$this->_f3->set("image", $_POST["image"]); //adding later
-                    $itemID = $this->_db->insertItem($_POST["name"], $_POST["description"], $collID);
+                    $itemID = $this->_db->insertItem($_POST["name"],
+                        $_POST["description"], $collID);
 
                     if (isset($_POST["itemAttrVal"])) {
-                        foreach ($_POST["itemAttrVal"] AS $attrID => $itemValue) {
-                            $this->_db->addItemAttributeValue($itemID, $attrID, $itemValue);
+                        foreach ($_POST["itemAttrVal"] AS
+                                 $attrID => $itemValue) {
+                            $this->_db->addItemAttributeValue(
+                                $itemID, $attrID, $itemValue);
                         }
                     }
 
@@ -259,10 +285,13 @@ class ICollectController {
             } elseif (isset($_POST["add-attr"])) {
                 //add validation of attribute values
                 if ($isValid) {
-                    $newAttrID = $this->_db->insertAttribute($collID, $_POST["name"]);
+                    $newAttrID =
+                        $this->_db->insertAttribute($collID, $_POST["name"]);
                     if ($newAttrID) {
-                        $_SESSION["collection"]->addAttribute($newAttrID, $_POST["name"]);
-                        $this->_f3->set("errors['invalidAttributeName']", "attribute ".$newAttrID." added.");
+                        $_SESSION["collection"]->addAttribute(
+                            $newAttrID, $_POST["name"]);
+                        $this->_f3->set("errors['invalidAttributeName']",
+                            "attribute ".$newAttrID." added.");
                     }
                     //add else error
                 }
@@ -276,15 +305,21 @@ class ICollectController {
             } else {
                 $_SESSION["collection"] = new PremiumCollection();
             }
-            $_SESSION["collection"]->setName($collection["collectionName"]);
-            $_SESSION["collection"]->setDescription($collection["collectionDescription"]);
-            $_SESSION["collection"]->setPremium($collection["premium"]);
-            $_SESSION["collection"]->setCollectionID($collection["collectionID"]);
+            $_SESSION["collection"]->setName(
+                $collection["collectionName"]);
+            $_SESSION["collection"]->setDescription(
+                $collection["collectionDescription"]);
+            $_SESSION["collection"]->setPremium(
+                $collection["premium"]);
+            $_SESSION["collection"]->setCollectionID(
+                $collection["collectionID"]);
             if (is_a($_SESSION["collection"], "PremiumCollection")) {
-                $_SESSION["collection"]->setAttributes($this->_db->getAttributes($collID));
+                $_SESSION["collection"]->setAttributes(
+                    $this->_db->getAttributes($collID));
             }
 
-            $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems($_SESSION["collection"]->getCollectionID()));
+            $this->_f3->set("itemsRepeat", $this->_db->getCollectionItems(
+                $_SESSION["collection"]->getCollectionID()));
         }
 
         $view = new Template();
@@ -308,7 +343,8 @@ class ICollectController {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $target_dir = "uploads/";
-            $target_file = $target_dir.basename($_FILES["fileToUpload"]["name"]);
+            $target_file =
+                $target_dir.basename($_FILES["fileToUpload"]["name"]);
 
             $imageFileType = strtolower(pathinfo($target_file,
                 PATHINFO_EXTENSION));
@@ -336,14 +372,19 @@ class ICollectController {
                         $target_file)) {
 
                         if ($_SESSION["page"] === "Collection Image Upload") {
-                            $_SESSION["collection"]->setCollectionImage($target_file);
-                            $this->_db->addCollectionImage($_SESSION["collection"]->getCollectionID(), $target_file);
-                            $this->_f3->reroute('/'.$_SESSION["collection"]->getCollectionID());
+                            $_SESSION["collection"]->setCollectionImage(
+                                $target_file);
+                            $this->_db->addCollectionImage(
+                                $_SESSION["collection"]->getCollectionID(),
+                                $target_file);
+                            $this->_f3->reroute(
+                                '/'.$_SESSION["collection"]->getCollectionID());
                         }
 
                         $_SESSION["user"]->setProfileImg($target_file);
                         //$this->_f3->set("profileImage", $target_file);
-                        $this->_db->addImage($_SESSION["user"]->getUserID(), $target_file);
+                        $this->_db->addImage($_SESSION["user"]->getUserID(),
+                            $target_file);
                         $this->_f3->reroute('/welcome');
 
                     } else {
@@ -412,19 +453,23 @@ class ICollectController {
     }
 
     /**
-     * Allows users to change item name, description, or attributes. Also allows
-     * users to delete items.
+     * Allows users to change item name, description, or attributes.
+     * Also allows users to delete items.
      * Uses ajax validation to validate the values.
      */
     public function editTableAjax()
     {
        if (isset($_POST["colName"])) {
-           if ($_POST["colName"] === "Name" OR $_POST["colName"] === "Description") {
-               //echo "gtg";
-               //if ($_POST["colName"] === "Name"
-               $this->_db->changeItemValue($_POST["itemID"], $_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["newValue"]);
+           if ($_POST["colName"] === "Name" OR
+               $_POST["colName"] === "Description") {
+
+               $this->_db->changeItemValue($_POST["itemID"],
+                   $_SESSION["collection"]->getCollectionID(),
+                   $_POST["colName"], $_POST["newValue"]);
            } else {
-               $this->_db->changeItemAttributeValue($_SESSION["collection"]->getCollectionID(), $_POST["colName"], $_POST["itemID"], $_POST["newValue"]);
+               $this->_db->changeItemAttributeValue(
+                   $_SESSION["collection"]->getCollectionID(),
+                   $_POST["colName"], $_POST["itemID"], $_POST["newValue"]);
 
            }
        } elseif (isset($_POST["itemDeletion"])) {

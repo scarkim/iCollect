@@ -38,7 +38,7 @@ class User
      * @param $premium
      * @param $userEmail
      */
-    public function __construct($username = null,  $premium=null, $userEmail=null)
+    public function __construct($username = null, $premium=null, $userEmail=null)
     {
         $this->_username = $username;
         $this->_premium = $premium;

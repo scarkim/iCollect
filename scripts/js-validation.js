@@ -52,7 +52,9 @@ if (document.title === "iCollect Signup" ||
                     isValid = false;
                 }
 
-                if (email === "" || !email.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) {
+                if (email === "" ||
+                    !email.match(
+                        /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) {
                     errEmail.style.visibility = "visible";
                     isValid = false;
                 }
@@ -96,13 +98,17 @@ if (document.title === "iCollect Signup" ||
 
         form[0].onsubmit = validateCollection;
 
-        let collectionTitleErr = document.getElementById("collectionTitleErr");
-        let collectionDescriptionErr = document.getElementById("collectionDescriptionErr");
+        let collectionTitleErr =
+            document.getElementById("collectionTitleErr");
+        let collectionDescriptionErr =
+            document.getElementById("collectionDescriptionErr");
 
         function validateCollection() {
 
-            let collectionTitle = document.getElementById("title").value;
-            let collectionDescription = document.getElementById("description").value;
+            let collectionTitle =
+                document.getElementById("title").value;
+            let collectionDescription =
+                document.getElementById("description").value;
 
             collectionTitleErr.innerText = "";
             collectionDescriptionErr.innerText = "";
@@ -131,6 +137,35 @@ if (document.title === "iCollect Signup" ||
 
             return isValid;
         }
+    } else if (document.title === "Collection") {
+        let forms =
+            document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        let validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                let itemName = document.getElementById("name").value;
+                if ($.trim(itemName) === "") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    document.getElementById("err-name").innerText =
+                        "Item name required.";
+                }
+                else if (!itemName.match(/^[^<>#@$%^*|]+$/)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    document.getElementById("err-name").innerText =
+                        "No special characters allowed";
+                }
+
+                else {
+                    form.classList.add('was-validated');
+                }
+            });
+        });
+        document.getElementById("close").addEventListener("click", function() {
+            document.getElementById("err-name").innerText="";
+            $('#myModal').modal('hide');
+        });
     }
 }
 

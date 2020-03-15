@@ -6,7 +6,8 @@
         <check if="{{ @SESSION['user'] }}">
             <true>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="welcome">{{ @SESSION['user']->getUsername() }}</a>
+                    <a class="nav-link text-dark"
+                       href="welcome">{{ @SESSION['user']->getUsername() }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="logout">Logout</a>

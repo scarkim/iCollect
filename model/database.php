@@ -237,7 +237,7 @@ ORDER BY itemID";
     function insertAttribute($collID, $attrName)
     {
         $sql = "INSERT INTO `collectionAttributes` (collectionID, attributeName) 
-            VALUES ('$collID', '$attrName')";
+                VALUES ('$collID', '$attrName')";
         $statement = $this->_cnxn->prepare($sql);
         if ($statement->execute()) {
             return $this->_cnxn->lastInsertId();
@@ -253,7 +253,8 @@ ORDER BY itemID";
      */
     function getAttributes($collID)
     {
-        $sql = "SELECT * FROM `collectionAttributes` WHERE collectionID ='$collID'
+        $sql = "SELECT * FROM `collectionAttributes` 
+                WHERE collectionID ='$collID'
                 ORDER BY attributeID ASC";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
@@ -276,7 +277,7 @@ ORDER BY itemID";
     function addItemAttributeValue($itemID, $attrID, $itemValue)
     {
         $sql = "INSERT INTO `itemAttributeValue` (itemID, attributeID, itemValue) 
-            VALUES ('$itemID', '$attrID', '$itemValue')";
+                VALUES ('$itemID', '$attrID', '$itemValue')";
         $statement = $this->_cnxn->prepare($sql);
         $result = $statement->execute();
         return $result;
@@ -314,8 +315,8 @@ ORDER BY itemID";
                 WHERE itemID = '$itemID'";
         } else {
             $sql = "UPDATE `collectionItems` 
-                SET itemDescription = '$newValue'
-                WHERE itemID = '$itemID'";
+                    SET itemDescription = '$newValue'
+                    WHERE itemID = '$itemID'";
         }
 
         $statement = $this->_cnxn->prepare($sql);
@@ -356,7 +357,8 @@ ORDER BY itemID";
     function getAttributeID($collectionID, $colName)
     {
         $sql = "SELECT attributeID From `collectionAttributes` 
-                WHERE collectionID = '$collectionID' AND attributeName = '$colName'";
+                WHERE collectionID = '$collectionID' 
+                AND attributeName = '$colName'";
         $statement = $this->_cnxn->prepare($sql);
         $statement->execute();
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -397,11 +399,12 @@ ORDER BY itemID";
         }
 
         $sql2 = "DELETE FROM `collectionAttributes`
-                WHERE collectionID = '$collectionID'";
+                 WHERE collectionID = '$collectionID'";
         $statement2 = $this->_cnxn->prepare($sql2);
         $statement2->execute();
 
-        $sql3 = "DELETE FROM `userCollections` WHERE collectionID = '$collectionID'";
+        $sql3 = "DELETE FROM `userCollections` 
+                 WHERE collectionID = '$collectionID'";
         $statement3 = $this->_cnxn->prepare($sql3);
         $statement3->execute();
     }

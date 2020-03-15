@@ -12,7 +12,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
                     <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
-                        <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
+                        <repeat group="{{ @SESSION['collection']->getAttributes()}}"
+                                key="{{ @attrID }}" value="{{ @attrName }}">
                             <th>{{ @attrName }}</th>
                         </repeat>
                     </check>
@@ -26,42 +27,51 @@
                         <td>{{ @items['itemName'] }}</td>
                         <td>{{ @items['itemDescription'] }}</td>
                         <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
-                            <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
+                            <repeat group="{{ @SESSION['collection']->getAttributes()}}"
+                                    key="{{ @attrID }}" value="{{ @attrName }}">
                                 <td>{{ @db->getItemAttrValue(@attrID, @items['itemID']) }}</td>
                             </repeat>
                         </check>
-                        <td><button class="btn-sm btn-danger deleteItem" data-name="{{ @items['itemName'] }}" data-id="{{ @items['itemID'] }}" data-toggle="modal" data-target="#delItemModal">Delete</button></td>
+                        <td>
+                            <button class="btn-sm btn-danger deleteItem"
+                                    data-name="{{ @items['itemName'] }}"
+                                    data-id="{{ @items['itemID'] }}"
+                                    data-toggle="modal"
+                                    data-target="#delItemModal">Delete</button>
+                        </td>
                     </tr>
                 </repeat>
             </tbody>
         </table>
     </div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-success"
+            data-toggle="modal" data-target="#myModal">
         Add an item
     </button>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#attrModal"
+    <button type="button" class="btn btn-success"
+            data-toggle="modal" data-target="#attrModal"
     <check if="{{ !is_a(@SESSION['collection'], 'PremiumCollection') }}">
        disabled
     </check>>
         Add a new attribute
     </button>
     <br>
-    <button type="button" class="btn btn-danger mt-3" id="deleteCollection" data-name="{{  @SESSION['collection']->getName() }}" data-id="{{ @SESSION['collection']->getCollectionID() }}" data-toggle="modal" data-target="#delCollectionModal">
+    <button type="button" class="btn btn-danger mt-3" id="deleteCollection"
+            data-name="{{  @SESSION['collection']->getName() }}"
+            data-id="{{ @SESSION['collection']->getCollectionID() }}"
+            data-toggle="modal" data-target="#delCollectionModal">
         Delete this collection
     </button>
-    <check if="{{ @errors['invalidAttributeName'] }}">
-        <br>
-        <span class="err">{{ @errors['invalidAttributeName'] }}</span>
-    </check>
-    <p id="result"></p>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modals -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add an Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -69,80 +79,105 @@
                     <form class="needs-validation" novalidate method="post" >
                         <div class="form-group">
                             <label for = "name">Item Name: </label>
-                            <input type="text" 	 name="name" class="form-control" id="name"  placeholder="Item name" required>
+                            <input type="text" 	 name="name"
+                                   class="form-control" id="name"
+                                   placeholder="Item name" required>
                             <p id="err-name" class = "err">
                             </p>
                         </div>
                         <div class="form-group">
                             <label for="description">Item Description: &nbsp;</label>
-                            <textarea id = "description" name="description" rows="5" cols="55"></textarea>
+                            <textarea id = "description" name="description"
+                                      rows="5" cols="55"></textarea>
                         </div>
                         <check if="{{ is_a(@SESSION['collection'], 'PremiumCollection') AND @SESSION['collection']->getAttributes() }}">
-                            <repeat group="{{ @SESSION['collection']->getAttributes()}}" key="{{ @attrID }}" value="{{ @attrName }}">
+                            <repeat group="{{ @SESSION['collection']->getAttributes()}}"
+                                    key="{{ @attrID }}" value="{{ @attrName }}">
                                 <div class="form-group">
                                     <label for="{{ @attrName }}">{{ @attrName }}: &nbsp;</label>
-                                    <input type="text" 	name="itemAttrVal[{{ @attrID }}]" class="form-control" id="{{ @attrName }}"  placeholder="{{ @attrName }}">
+                                    <input type="text"
+                                           name="itemAttrVal[{{ @attrID }}]"
+                                           class="form-control"
+                                           id="{{ @attrName }}"
+                                           placeholder="{{ @attrName }}">
                                 </div>
                             </repeat>
                         </check>
-                        <button type="submit" class="btn btn-secondary" name="add-item">Submit</button>
+                        <button type="submit" class="btn btn-secondary"
+                                name="add-item">Submit</button>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id = "close" class="btn btn-secondary">Close</button>
+                    <button type="button" id = "close"
+                            class="btn btn-secondary">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="attrModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+    <div class="modal fade" id="attrModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalTitle">Add new attribute for items</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="exampleModalTitle">
+                        Add new attribute for {{ @SESSION['collection']->getName() }}</h5>
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form action="#" method="post">
                         <div class="form-group">
-                            <label for = "attr-name">New Attribute Name: </label>
+                            <label for="attr-name">New Attribute Name: </label>
                             <span class="err" id="attr-name-err"></span>
-                            <input type="text" 	name="name" class="form-control" id="attr-name"  placeholder="Attribute name" required>
+                            <input type="text" 	name="name" class="form-control"
+                                   id="attr-name"  placeholder="Attribute name"
+                                   required>
                         </div>
-                        <button type="submit" class="btn btn-secondary" name="add-attr">Add</button>
+                        <button type="submit" class="btn btn-secondary"
+                                name="add-attr">Add</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="delItemModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal fade" id="delItemModal" tabindex="-1" role="dialog"
+         aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Delete Item #<span id="itemToDelete"></span>?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="modalTitle">
+                        Delete Item #<span id="itemToDelete"></span>?</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                    <button type="button" class="btn-success"
+                            data-dismiss="modal" aria-label="Cancel">
                         <span aria-hidden="true">Cancel</span>
                     </button>
-                    <button type="button" class="btn-danger" id="confirmItemDel" data-id="" data-dismiss="modal" aria-label="Confirm">
+                    <button type="button" class="btn-danger" id="confirmItemDel"
+                            data-id="" data-dismiss="modal"
+                            aria-label="Confirm">
                         <span aria-hidden="true">Confirm</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editValueModal" tabindex="-1" role="dialog" aria-labelledby="modalEditTitle" aria-hidden="true">
+    <div class="modal fade" id="editValueModal" tabindex="-1" role="dialog"
+         aria-labelledby="modalEditTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEditTitle">Edit Item Attribute</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title"
+                        id="modalEditTitle">Edit Item Attribute</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -150,10 +185,14 @@
                     <label for="newValue" id="newValueLabel"></label>
                     <input type="text" id="newValue">
                     <span>(leave blank to clear the data)</span><br>
-                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                    <button type="button" class="btn-success"
+                            data-dismiss="modal" aria-label="Cancel">
                         <span aria-hidden="true">Cancel</span>
                     </button>
-                    <button type="button" class="btn-danger" id="confirmItemEdit" data-id="" data-col-name="" data-old-value="" data-dismiss="modal" aria-label="Confirm">
+                    <button type="button" class="btn-danger"
+                            id="confirmItemEdit" data-id=""
+                            data-col-name="" data-old-value=""
+                            data-dismiss="modal" aria-label="Confirm">
                         <span aria-hidden="true">Confirm</span>
                     </button>
                 </div>
@@ -161,20 +200,26 @@
         </div>
     </div>
 
-<div class="modal fade" id="delCollectionModal" tabindex="-1" role="dialog" aria-labelledby="modalDelTitle" aria-hidden="true">
+<div class="modal fade" id="delCollectionModal" tabindex="-1"
+     role="dialog" aria-labelledby="modalDelTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalDelTitle">Delete Collection {{ @SESSION["collection"]->getName() }} and all its items?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="modalDelTitle">
+                        Delete Collection {{ @SESSION["collection"]->getName() }} and all its items?</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <button type="button" class="btn-success" data-dismiss="modal" aria-label="Cancel">
+                    <button type="button" class="btn-success"
+                            data-dismiss="modal" aria-label="Cancel">
                         <span aria-hidden="true">Cancel</span>
                     </button>
-                    <button type="button" class="btn-danger" id="confirmCollectionDel" data-id="" data-dismiss="modal" aria-label="Confirm">
+                    <button type="button" class="btn-danger"
+                            id="confirmCollectionDel" data-id=""
+                            data-dismiss="modal" aria-label="Confirm">
                         <span aria-hidden="true">Confirm</span>
                     </button>
                 </div>
@@ -183,33 +228,4 @@
     </div>
 </div>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script>
-            let forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            let validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                let itemName = document.getElementById("name").value;
-                if ($.trim(itemName) === "") {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    document.getElementById("err-name").innerText= "Item name required.";
-                }
-                 else if (!itemName.match(/^[^<>#@$%^*|]+$/)) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                        document.getElementById("err-name").innerText= "No special characters allowed";
-                    }
-
-                else {
-                    form.classList.add('was-validated');
-                }
-            });
-            });
-            document.getElementById("close").addEventListener("click", function() {
-                document.getElementById("err-name").innerText="";
-                $('#myModal').modal('hide');
-            });
-
-
-</script>
 <include href="views/footer.html" />

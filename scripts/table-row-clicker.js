@@ -17,12 +17,14 @@ $('#table').bootstrapTable({
 
 $("#confirmItemEdit").click(function (event) {
     let value= $("#newValue").val();
-    if (value != null && value.match(/^[^<>#@$%^*|]+$/))  {
+    if (value != null && value.match(/^[^<>#@%^*|]+$/) || $.trim(value) === "") {
         let object = $("#confirmItemEdit");
         $.post(
             "editTableAjax",
-            {itemID:object.data("id"), oldValue:object.data("old-value"),
-                colName:object.data("col-name"), newValue:$("#newValue").val()},
+            {
+                itemID: object.data("id"), oldValue: object.data("old-value"),
+                colName: object.data("col-name"), newValue: $("#newValue").val()
+            },
             function (result) {
                 window.location.assign(window.location);
             });
@@ -33,6 +35,10 @@ $("#confirmItemEdit").click(function (event) {
         document.getElementById("err-edit").innerText =
             "No special characters allowed";
     }
+});
+//When Cancel button is clicked, clear error messages.
+document.getElementById("button-edit").addEventListener("click", function() {
+    document.getElementById("err-edit").innerText="";
 });
 
 $('.deleteItem').click(function () {

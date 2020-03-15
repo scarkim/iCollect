@@ -27,9 +27,8 @@
                 <span class="err"> {{ @errors['invalidCollectionDescription'] }}</span>
             </check>
             <textarea class="form-control" id = "description" name="description"
-                      rows="5" cols="100" placeholder="Max 200 characters.">
-
-            </textarea>
+                      rows="5" cols="100"
+                      placeholder="Max 200 characters."></textarea>
             </label>
         </div>
         <check if="{{ @SESSION['user']->getPremium() === '1' }}">

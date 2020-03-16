@@ -1,6 +1,6 @@
 # iCollect
 By Scarlett Kim and Robert Cox
-###Description
+### Description
 iCollect is a website where users can signup and login to create collections. 
 To each collection items can be added. Users can edit the values of item 
 attributes, delete items and delete entire collections. New users can upload

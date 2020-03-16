@@ -30,7 +30,7 @@ Item values can be edited/updated, assuming they pass validation. Users can also
 delete individual items or entire collections.
 ##### Has a history of commits from both team members to a Git repository.
 https://github.com/scarkim/iCollect
-#####Uses OOP, and defines multiple classes, including at least one inheritance relationship.
+##### Uses OOP, and defines multiple classes, including at least one inheritance relationship.
 iCollect uses a total of six classes to handle all aspects routing and MVC. 
 Already mention were the controller and model classes. A User class 
 (/classes/user.php) is implemented for use in the controller to track the 

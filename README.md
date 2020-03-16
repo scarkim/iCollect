@@ -1,6 +1,6 @@
 # iCollect
 By Scarlett Kim and Robert Cox
-###Description
+### Description
 iCollect is a website where users can signup and login to create collections. 
 To each collection items can be added. Users can edit the values of item 
 attributes, delete items and delete entire collections. New users can upload
@@ -8,8 +8,8 @@ a profile image at sign-up and a collection image at collection creation.
 Premium users (chosen at sign-up) can have more than 5 collections and create 
 premium collections. With premium collections users can add new attributes for 
 items to the collection.
-###Requirements
-#####Separates all database/business logic using the MVC pattern.
+### Requirements
+##### Separates all database/business logic using the MVC pattern.
 All Session handling is performed by the controller class 
 (/controller/iCollect-controller.php). Data validation and 
 database access is handled by the model classes (/model/database.php and 
